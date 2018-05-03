@@ -1,4 +1,4 @@
-package com.ezalori.canal;
+package org.ezalori.morph.client;
 
 /**
  * Created by hey on 26/04/2018.

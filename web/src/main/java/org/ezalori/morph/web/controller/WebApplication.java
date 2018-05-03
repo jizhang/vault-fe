@@ -1,4 +1,4 @@
-package com.controller;
+package org.ezalori.morph.web.controller;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,7 +11,7 @@ import org.springframework.context.annotation.PropertySource;
  */
 //@ComponentScan
 @SpringBootApplication
-@PropertySource(value = { "WEB-INF/config.properties" })
+@PropertySource(value = { "classpath:config.properties" })
 public class WebApplication extends SpringBootServletInitializer {
 
     @Override
