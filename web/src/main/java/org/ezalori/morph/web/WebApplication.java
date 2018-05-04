@@ -1,4 +1,4 @@
-package org.ezalori.morph.web.controller;
+package org.ezalori.morph.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,7 +9,6 @@ import org.springframework.context.annotation.PropertySource;
 /**
  * Created by hey on 02/05/2018.
  */
-//@ComponentScan
 @SpringBootApplication
 @PropertySource(value = { "classpath:config.properties" })
 public class WebApplication extends SpringBootServletInitializer {

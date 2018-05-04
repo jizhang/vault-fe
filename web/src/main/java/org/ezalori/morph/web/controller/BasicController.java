@@ -14,6 +14,6 @@ public class BasicController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseBody
     public String printHello() throws Exception{
-        return "Get some fun";
+        return "Get some fun\n";
     }
 }

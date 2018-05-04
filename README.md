@@ -1,8 +1,6 @@
-# morph-fe
+# Morph
 
-> morph-fe
-
-## Build Setup
+## Front-end Build Setup
 
 ``` bash
 # install dependencies
@@ -19,3 +17,9 @@ npm run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## Back-end
+
+```
+mvn clean package -am -pl web
+```
