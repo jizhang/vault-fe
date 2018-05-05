@@ -13,13 +13,13 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource(value = { "classpath:config.properties" })
 public class WebApplication extends SpringBootServletInitializer {
 
-    @Override
-    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-        return builder.sources(WebApplication.class);
-    }
+  @Override
+  protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+    return builder.sources(WebApplication.class);
+  }
 
-    public static void main(String[] args) {
-        SpringApplication.run(WebApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(WebApplication.class, args);
+  }
 
 }
