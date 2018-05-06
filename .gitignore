@@ -45,6 +45,7 @@ hs_err_pid*
 # Eclipse
 .project
 .classpath
+.checkstyle
 .settings/
 
 # mac
