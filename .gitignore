@@ -33,6 +33,7 @@ yarn-error.log*
 *.zip
 *.tar.gz
 *.rar
+target/
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
@@ -44,11 +45,8 @@ hs_err_pid*
 # Eclipse
 .project
 .classpath
+.checkstyle
 .settings/
 
 # mac
 .DS_Store
-
-# target
-web/target/
-client/target/

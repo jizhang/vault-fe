@@ -1,5 +1,7 @@
 # Morph
 
+[![Build Status](https://travis-ci.org/ezalori/Morph.svg?branch=master)](https://travis-ci.org/ezalori/Morph)
+
 ## Front-end Build Setup
 
 ``` bash
