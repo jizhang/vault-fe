@@ -9,7 +9,10 @@
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js",
-    "precommit": "mvn validate"
+    "precommit": "lint-staged && mvn validate"
+  },
+  "lint-staged": {
+    "*.{js,vue}": "eslint"
   },
   "dependencies": {
     "vue": "^2.5.2",
@@ -43,6 +46,7 @@
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
     "husky": "^0.14.3",
+    "lint-staged": "^7.1.0",
     "node-notifier": "^5.1.2",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.2.0",

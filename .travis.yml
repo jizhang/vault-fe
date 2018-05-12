@@ -1,3 +1,8 @@
 language: java
 jdk:
   - oraclejdk8
+before_install:
+  - nvm install 8
+  - npm install -g yarn
+  - yarn install
+  - yarn lint
