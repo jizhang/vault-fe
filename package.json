@@ -9,7 +9,7 @@
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js",
-    "precommit": "lint-staged && mvn validate"
+    "precommit": "lint-staged && mvn verify"
   },
   "lint-staged": {
     "*.{js,vue}": "eslint"
