@@ -6,3 +6,4 @@ before_install:
   - npm install -g yarn
   - yarn install
   - yarn lint
+cache: yarn
