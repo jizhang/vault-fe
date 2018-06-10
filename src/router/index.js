@@ -1,15 +1,25 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import ETL from '@/components/ETL'
+import Monitor from '@/components/Monitor'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      path: '/etl',
+      name: 'ETL',
+      component: ETL,
+    },
+    {
+      path: '/monitor',
+      name: 'Monitor',
+      component: Monitor,
+    },
+    {
+      path: '*',
+      redirect: '/etl',
     }
   ]
 })
