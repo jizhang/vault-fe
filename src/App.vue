@@ -6,10 +6,14 @@
       </el-header>
       <el-container>
         <el-aside width="240px">
-          <el-menu style="height: 100%;">
-            <el-menu-item>
-              <i class="el-icon-menu"></i>
+          <el-menu :router="true" style="height: 100%;">
+            <el-menu-item index="etl">
+              <i class="el-icon-sort"></i>
               <span>ETL</span>
+            </el-menu-item>
+            <el-menu-item index="monitor">
+              <i class="el-icon-bell"></i>
+              <span>Monitor</span>
             </el-menu-item>
           </el-menu>
         </el-aside>
@@ -35,6 +39,8 @@ body {
 
 #app {
   font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+  font-size: 14px;
+  color: #606266;
 }
 
 .app-header {
