@@ -10,10 +10,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class BasicController {
-
   @RequestMapping(value = "/", method = RequestMethod.GET)
   @ResponseBody
   public String printHello() throws Exception {
     return "Get some fun\n";
+  }
+
+  @RequestMapping(value = "/api/ping")
+  @ResponseBody
+  public Object ping() {
+    return new ApiResponse("pong");
   }
 }

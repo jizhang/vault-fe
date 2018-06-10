@@ -1,6 +1,7 @@
 <template>
   <div class="page-etl">
     ETL
+    <div v-text="msg"></div>
   </div>
 </template>
 
@@ -9,8 +10,16 @@ export default {
   name: 'ETL',
   data () {
     return {
-
+      msg: '',
     }
+  },
+
+  mounted () {
+    fetch('/api/ping')
+      .then(response => response.json())
+      .then(responseJson => {
+        this.msg = responseJson.payload
+      })
   }
 }
 </script>
