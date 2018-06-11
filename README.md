@@ -6,22 +6,23 @@
 
 ``` bash
 # install dependencies
-npm install
+yarn install
 
 # serve with hot reload at localhost:8080
-npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
+yarn start
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 ## Back-end
 
-```
+```bash
+# install dependencies
+mvn install
+
+# checkstyle & spotbugs
+mvn verify
+
+# build morph-web WAR file
 mvn clean package -am -pl web
 ```
+
+Import `morph-web` into IDE, run `org.ezalori.morph.web.WebApplication`, and it will start an API server listening on port `8081`.
