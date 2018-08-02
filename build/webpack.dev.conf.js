@@ -9,6 +9,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+const setupMockServer = require('../mock/index')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
@@ -38,7 +39,6 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       ? { warnings: false, errors: true }
       : false,
     publicPath: config.dev.assetsPublicPath,
-    proxy: config.dev.proxyTable,
     quiet: true, // necessary for FriendlyErrorsPlugin
     watchOptions: {
       poll: config.dev.poll,
@@ -67,6 +67,17 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     ])
   ]
 })
+
+// mock or proxy api calls
+if (process.env.USE_PROXY == 'true') {
+  devWebpackConfig.devServer.proxy = {
+    '/api': 'http://127.0.0.1:8081',
+  }
+} else {
+  devWebpackConfig.devServer.before = (app) => {
+    setupMockServer(app)
+  }
+}
 
 module.exports = new Promise((resolve, reject) => {
   portfinder.basePort = process.env.PORT || config.dev.port
