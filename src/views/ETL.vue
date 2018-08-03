@@ -10,7 +10,7 @@ import { Component, Vue } from 'vue-property-decorator'
 
 @Component({})
 export default class ETL extends Vue {
-  private msg = ''
+  public msg = ''
 
   public mounted() {
     fetch('/api/ping')
