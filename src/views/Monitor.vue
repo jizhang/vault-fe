@@ -4,15 +4,11 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Monitor',
-  data () {
-    return {
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
 
-    }
-  }
-}
+@Component({})
+export default class Monitor extends Vue {}
 </script>
 
 <style lang="scss">

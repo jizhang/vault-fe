@@ -48,5 +48,6 @@ hs_err_pid*
 .checkstyle
 .settings/
 
-# mac
-.DS_Store
+# local env files
+.env.local
+.env.*.local
