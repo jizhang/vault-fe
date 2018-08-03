@@ -5,16 +5,14 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'ETL',
-  data () {
-    return {
-      msg: '',
-    }
-  },
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
 
-  mounted () {
+@Component({})
+export default class ETL extends Vue {
+  public msg = ''
+
+  public mounted() {
     fetch('/api/ping')
       .then(response => response.json())
       .then(responseJson => {
