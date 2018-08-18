@@ -1,29 +1,60 @@
 <template>
   <div class="page-etl">
-    ETL
-    <div v-text="msg"></div>
+    <div class="page-title">
+      Tables
+    </div>
+    <el-table
+      :data="tables"
+      style="width: 100%"
+    >
+      <el-table-column
+        prop="id"
+        label="#"
+      />
+      <el-table-column
+        prop="sourceDatabase"
+        label="Source Database"
+      />
+      <el-table-column
+        prop="sourceTable"
+        label="Source Table"
+      />
+      <el-table-column
+        prop="targetTable"
+        label="Target Table"
+      />
+      <el-table-column
+        prop="createTime"
+        label="Create Time"
+      />
+    </el-table>
   </div>
 </template>
+
+<style lang="scss">
+.page-etl {
+  .page-title {
+    font-size: 14px;
+    line-height: 14px;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+}
+</style>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component({})
 export default class ETL extends Vue {
-  public msg = ''
+  public tables: any[] = []
 
   public mounted() {
-    fetch('/api/ping')
+    fetch('/api/table/list')
       .then(response => response.json())
       .then(responseJson => {
-        this.msg = responseJson.payload
+        this.tables = responseJson.payload
       })
   }
 }
 </script>
-
-<style lang="scss">
-.page-etl {
-
-}
-</style>
