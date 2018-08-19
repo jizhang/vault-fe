@@ -7,17 +7,17 @@
       <el-container>
         <el-aside width="240px">
           <el-menu :router="true" style="height: 100%;">
-            <el-menu-item index="etl">
+            <el-menu-item index="/table/list">
               <i class="el-icon-sort"></i>
               <span>ETL</span>
             </el-menu-item>
-            <el-menu-item index="monitor">
+            <el-menu-item index="/monitor">
               <i class="el-icon-bell"></i>
               <span>Monitor</span>
             </el-menu-item>
           </el-menu>
         </el-aside>
-        <el-main>
+        <el-main style="padding-top: 15px;">
           <router-view/>
         </el-main>
       </el-container>
@@ -43,7 +43,7 @@ body {
   line-height: 60px;
   color: #303133;
   box-shadow: 0 2px 8px #f0f1f2;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 
   img {
     height: 40px;
