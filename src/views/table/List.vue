@@ -10,7 +10,6 @@
     <el-table
       :data="tables"
       style="width: 100%"
-      size="small"
     >
       <el-table-column
         prop="id"
@@ -52,7 +51,7 @@
     font-size: 14px;
     line-height: 28px;
     font-weight: bold;
-    margin-bottom: 8px;
+    margin-bottom: 20px;
   }
 
   .page-button {

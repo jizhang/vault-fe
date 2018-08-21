@@ -50,6 +50,25 @@
           </el-form-item>
         </el-col>
       </el-form-item>
+      <el-form-item label="Columns">
+        <table class="table-columns">
+          <tr>
+            <th>Name</th>
+            <th>Extract</th>
+          </tr>
+          <tr v-for="col in table.columns" :key="col.name">
+            <td>{{col.name}}</td>
+            <td>
+              <el-checkbox v-model="col.extract" />
+            </td>
+          </tr>
+        </table>
+        <el-button size="mini">Import Columns</el-button>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary">Submit</el-button>
+        <el-button>Cancel</el-button>
+      </el-form-item>
     </el-form>
   </div>
 </template>
@@ -60,13 +79,41 @@
     font-size: 14px;
     line-height: 28px;
     font-weight: bold;
-    margin-bottom: 8px;
+    margin-bottom: 20px;
+  }
+
+  .table-columns {
+    font-size: 14px;
+    line-height: 20px;
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 10px;
+
+    th {
+      text-align: left;
+      color: #909399;
+    }
+
+    th, td {
+      padding: 0 16px;
+      border-bottom: 1px solid #ebeef5;
+      height: 40px;
+    }
+
+    tr:not(:first-child):hover {
+      background-color: #f5f7fa;
+    }
   }
 }
 </style>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+
+interface Column {
+  name: string,
+  extract: boolean,
+}
 
 interface Table {
   id: number | null,
@@ -76,6 +123,7 @@ interface Table {
   targetInstance: number | '',
   targetDatabase: string,
   targetTable: string,
+  columns: Column[],
 }
 
 @Component({})
@@ -88,6 +136,10 @@ export default class Edit extends Vue {
     targetInstance: '',
     targetDatabase: '',
     targetTable: '',
+    columns: [
+      { name: 'col1', extract: true },
+      { name: 'col2', extract: false },
+    ],
   }
 
   public instanceOptions = [

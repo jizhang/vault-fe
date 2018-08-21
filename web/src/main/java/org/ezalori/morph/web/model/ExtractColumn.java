@@ -5,4 +5,5 @@ import lombok.Data;
 @Data
 public class ExtractColumn {
   private String name;
+  private Boolean extract;
 }
