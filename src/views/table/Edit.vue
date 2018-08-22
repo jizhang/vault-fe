@@ -5,8 +5,8 @@
       <span v-else>New Table</span>
     </div>
 
-    <el-form ref="form" :model="table" label-width="150px" style="width: 650px;">
-      <el-form-item label="Source Instance">
+    <el-form ref="form" :model="table" label-width="150px" style="width: 650px;" :rules="rules">
+      <el-form-item label="Source Instance" prop="sourceInstance">
         <el-select v-model="table.sourceInstance" placeholder="Select" style="width: 162px;">
           <el-option
             v-for="item in instanceOptions"
@@ -18,17 +18,17 @@
       </el-form-item>
       <el-form-item label="Source Table">
         <el-col :span="8" style="padding-right: 5px;">
-          <el-form-item>
+          <el-form-item prop="sourceDatabase">
             <el-input v-model="table.sourceDatabase" placeholder="Database"/>
           </el-form-item>
         </el-col>
         <el-col :span="16" style="padding-left: 5px;">
-          <el-form-item>
+          <el-form-item prop="sourceTable">
             <el-input v-model="table.sourceTable" placeholder="Table" />
           </el-form-item>
         </el-col>
       </el-form-item>
-      <el-form-item label="Target Instance">
+      <el-form-item label="Target Instance" prop="targetInstance">
         <el-select v-model="table.targetInstance" placeholder="Select" style="width: 162px;">
           <el-option
             v-for="item in instanceOptions"
@@ -40,17 +40,17 @@
       </el-form-item>
       <el-form-item label="Target Table">
         <el-col :span="8" style="padding-right: 5px;">
-          <el-form-item>
+          <el-form-item prop="targetDatabase">
             <el-input v-model="table.targetDatabase" placeholder="Database"/>
           </el-form-item>
         </el-col>
         <el-col :span="16" style="padding-left: 5px;">
-          <el-form-item>
+          <el-form-item prop="targetTable">
             <el-input v-model="table.targetTable" placeholder="Table" />
           </el-form-item>
         </el-col>
       </el-form-item>
-      <el-form-item label="Columns">
+      <el-form-item label="Columns" prop="columns">
         <table class="table-columns">
           <tr>
             <th>Name</th>
@@ -65,8 +65,8 @@
         </table>
         <el-button size="mini">Import Columns</el-button>
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary">Submit</el-button>
+      <el-form-item style="padding-top: 10px;">
+        <el-button type="primary" @click="submit()">Submit</el-button>
         <el-button>Cancel</el-button>
       </el-form-item>
     </el-form>
@@ -109,6 +109,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import * as _ from 'lodash'
+import * as qs from 'qs'
 
 interface Column {
   name: string,
@@ -146,5 +148,61 @@ export default class Edit extends Vue {
     { value: 1, label: 'dw_stage' },
     { value: 2, label: 'zhuanqian' },
   ]
+
+  public rules = {
+      sourceInstance: [
+        { required: true, message: 'Source instance is required' },
+      ],
+      sourceDatabase: [
+        { required: true, message: 'Source database is required' },
+      ],
+      sourceTable: [
+        { required: true, message: 'Source table is required' },
+      ],
+      targetInstance: [
+        { required: true, message: 'Target instance is required' },
+      ],
+      targetDatabase: [
+        { required: true, message: 'Target database is required' },
+      ],
+      targetTable: [
+        { required: true, message: 'Target table is required' },
+      ],
+      columns: [
+        {
+          validator(rule: any, value: Column[], callback: (error?: Error) => void) {
+            if (_.isEmpty(value)) {
+              callback(new Error('Columns are quired'))
+              return
+            }
+            callback()
+          },
+        },
+      ],
+    }
+
+  public submit() {
+    (this.$refs.form as any).validate((valid: boolean) => {
+      if (!valid) {
+        return false
+      }
+
+      let data: any = _.clone(this.table)
+      data.columns = JSON.stringify(data.columns)
+
+      fetch('/api/table/save', {
+        method: 'POST',
+        body: qs.stringify(data),
+      })
+      .then(response => response.json())
+      .then(responseJson => {
+        this.table.id = responseJson.payload.id
+        this.$message({
+          type: 'success',
+          message: 'Table is saved',
+        })
+      })
+    })
+  }
 }
 </script>

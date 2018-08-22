@@ -32,6 +32,14 @@ app.get('/api/table/list', (req, res) => {
   })
 })
 
+app.post('/api/table/save', (req, res) => {
+  res.json({
+    payload: {
+      id: 1,
+    },
+  })
+})
+
 const server = app.listen(8081, () => {
   console.log('mock server listening on port ' + server.address().port)
 })
