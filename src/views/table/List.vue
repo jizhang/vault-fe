@@ -37,7 +37,7 @@
         width="120"
       >
         <template slot-scope="scope">
-          <el-button type="text" size="mini">Edit</el-button>
+          <el-button type="text" size="mini" @click="editTable(scope.row)">Edit</el-button>
           <el-button type="text" size="mini">Delete</el-button>
         </template>
       </el-table-column>
@@ -62,6 +62,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import * as _ from 'lodash'
 
 @Component({})
 export default class List extends Vue {
@@ -73,6 +74,13 @@ export default class List extends Vue {
       .then(responseJson => {
         this.tables = responseJson.payload
       })
+  }
+
+  public editTable(table: any) {
+    this.$router.push({
+      path: '/table/edit',
+      query: _.pick(table, ['id']),
+    })
   }
 }
 </script>

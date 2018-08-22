@@ -63,7 +63,7 @@
             </td>
           </tr>
         </table>
-        <el-button size="mini">Import Columns</el-button>
+        <el-button size="mini" @click="importColumns()">Import Columns</el-button>
       </el-form-item>
       <el-form-item style="padding-top: 10px;">
         <el-button type="primary" @click="submit()">Submit</el-button>
@@ -138,10 +138,7 @@ export default class Edit extends Vue {
     targetInstance: '',
     targetDatabase: '',
     targetTable: '',
-    columns: [
-      { name: 'col1', extract: true },
-      { name: 'col2', extract: false },
-    ],
+    columns: [],
   }
 
   public instanceOptions = [
@@ -150,36 +147,47 @@ export default class Edit extends Vue {
   ]
 
   public rules = {
-      sourceInstance: [
-        { required: true, message: 'Source instance is required' },
-      ],
-      sourceDatabase: [
-        { required: true, message: 'Source database is required' },
-      ],
-      sourceTable: [
-        { required: true, message: 'Source table is required' },
-      ],
-      targetInstance: [
-        { required: true, message: 'Target instance is required' },
-      ],
-      targetDatabase: [
-        { required: true, message: 'Target database is required' },
-      ],
-      targetTable: [
-        { required: true, message: 'Target table is required' },
-      ],
-      columns: [
-        {
-          validator(rule: any, value: Column[], callback: (error?: Error) => void) {
-            if (_.isEmpty(value)) {
-              callback(new Error('Columns are quired'))
-              return
-            }
-            callback()
-          },
+    sourceInstance: [
+      { required: true, message: 'Source instance is required' },
+    ],
+    sourceDatabase: [
+      { required: true, message: 'Source database is required' },
+    ],
+    sourceTable: [
+      { required: true, message: 'Source table is required' },
+    ],
+    targetInstance: [
+      { required: true, message: 'Target instance is required' },
+    ],
+    targetDatabase: [
+      { required: true, message: 'Target database is required' },
+    ],
+    targetTable: [
+      { required: true, message: 'Target table is required' },
+    ],
+    columns: [
+      {
+        validator(rule: any, value: Column[], callback: (error?: Error) => void) {
+          if (_.isEmpty(value)) {
+            callback(new Error('Columns are quired'))
+            return
+          }
+          callback()
         },
-      ],
+      },
+    ],
+  }
+
+  public mounted() {
+    let id = _.get(this.$route.query, 'id')
+    if (!_.isUndefined(id)) {
+      fetch(`/api/table/get?${qs.stringify({ id })}`)
+        .then(response => response.json())
+        .then(responseJson => {
+          _.assign(this.table, responseJson.payload)
+        })
     }
+  }
 
   public submit() {
     (this.$refs.form as any).validate((valid: boolean) => {
@@ -203,6 +211,40 @@ export default class Edit extends Vue {
         })
       })
     })
+  }
+
+  public importColumns() {
+    let form: any = this.$refs.form
+
+    let props = ['sourceInstance', 'sourceDatabase', 'sourceTable']
+    let promises = _.map(props, prop => {
+      return new Promise((resolve, reject) => {
+        form.validateField(prop, (errorMessage: string) => {
+          if (errorMessage) {
+            reject(new Error(errorMessage))
+          } else {
+            resolve()
+          }
+        })
+      })
+    })
+
+    Promise.all(promises).then(() => {
+      let params = _.pick(this.table, props)
+      fetch(`/api/table/columns?${qs.stringify(params)}`)
+        .then(response => response.json())
+        .then(responseJson => {
+          for (let column of responseJson.payload) {
+            let existing = _.find(this.table.columns, ['name', column.name])
+            if (_.isUndefined(existing)) {
+              this.table.columns.push({
+                name: column.name,
+                extract: true,
+              })
+            }
+          }
+        })
+    }).catch(_.noop)
   }
 }
 </script>
