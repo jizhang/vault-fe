@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 import org.ezalori.morph.web.model.ExtractColumn;
 import org.ezalori.morph.web.model.ExtractTable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,21 @@ public class ExtractTableRepository {
     return jdbcTemplate.query("SELECT * FROM extract_table ORDER BY id DESC", rowMapper);
   }
 
+  /**
+   * Get table.
+   */
+  public Optional<ExtractTable> get(Integer id) {
+    List<ExtractTable> rows = jdbcTemplate.query("SELECT * FROM extract_table WHERE id = ?",
+        rowMapper, id);
+    if (rows.isEmpty()) {
+      return Optional.empty();
+    }
+    return Optional.of(rows.get(0));
+  }
+
+  /**
+   * Insert new table.
+   */
   public int insert(ExtractTable row) {
     KeyHolder keyHolder = new GeneratedKeyHolder();
     int affectedRows = jdbcTemplate.update(connection -> {
@@ -84,6 +100,9 @@ public class ExtractTableRepository {
     return affectedRows > 0 ? keyHolder.getKey().intValue() : 0;
   }
 
+  /**
+   * Update table.
+   */
   public int update(ExtractTable row) {
     return jdbcTemplate.update("UPDATE extract_table SET"
         + " source_instance = ?, source_database = ?, source_table = ?,"

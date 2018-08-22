@@ -201,9 +201,20 @@ export default class Edit extends Vue {
       fetch('/api/table/save', {
         method: 'POST',
         body: qs.stringify(data),
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
       })
       .then(response => response.json())
       .then(responseJson => {
+        if (responseJson.code !== 200) {
+          this.$message({
+            type: 'error',
+            message: responseJson.payload.message,
+          })
+          return
+        }
+
         this.table.id = responseJson.payload.id
         this.$message({
           type: 'success',
