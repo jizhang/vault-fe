@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 public class BasicController {
+
   @RequestMapping(value = "/", method = RequestMethod.GET)
   @ResponseBody
   public String printHello() throws Exception {
@@ -21,4 +22,5 @@ public class BasicController {
   public Object ping() {
     return new ApiResponse("pong");
   }
+
 }

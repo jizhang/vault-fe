@@ -1,6 +1,6 @@
 <template>
   <div class="page-monitor">
-    Monitor
+    Coming soon...
   </div>
 </template>
 

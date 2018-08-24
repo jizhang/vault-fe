@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import ETL from './views/ETL.vue'
+import TableList from './views/table/List.vue'
+import TableEdit from './views/table/Edit.vue'
 import Monitor from './views/Monitor.vue'
 
 Vue.use(Router)
@@ -16,9 +17,14 @@ export default new Router({
       component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
     },
     {
-      path: '/etl',
-      name: 'ETL',
-      component: ETL,
+      path: '/table/list',
+      name: 'TableList',
+      component: TableList,
+    },
+    {
+      path: '/table/edit',
+      name: 'TableEdit',
+      component: TableEdit,
     },
     {
       path: '/monitor',
@@ -27,7 +33,7 @@ export default new Router({
     },
     {
       path: '*',
-      redirect: '/etl',
+      redirect: '/table/list',
     },
   ],
 })

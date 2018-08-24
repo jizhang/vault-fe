@@ -51,3 +51,6 @@ hs_err_pid*
 # local env files
 .env.local
 .env.*.local
+
+# H2 database
+*.db
