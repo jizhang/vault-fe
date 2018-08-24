@@ -2,6 +2,7 @@ package org.ezalori.morph.web.service;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import org.ezalori.morph.web.model.DatabaseInstance;
 import org.ezalori.morph.web.model.ExtractColumn;
@@ -23,11 +24,12 @@ public class ExtractTableService {
   public List<ExtractColumn> getColumns(Integer sourceInstance,
       String sourceDatabase, String sourceTable) {
 
-    DatabaseInstance instance = instanceRepo.get(sourceInstance);
-    if (instance == null) {
+    Optional<DatabaseInstance> instanceOpt = instanceRepo.get(sourceInstance);
+    if (!instanceOpt.isPresent()) {
       return Collections.emptyList();
     }
 
+    DatabaseInstance instance = instanceOpt.get();
     DriverManagerDataSource ds = new DriverManagerDataSource(
         instance.getUrl(), instance.getUsername(), instance.getPassword());
     JdbcTemplate jt = new JdbcTemplate(ds);

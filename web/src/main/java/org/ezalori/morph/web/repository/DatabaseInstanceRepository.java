@@ -1,5 +1,6 @@
 package org.ezalori.morph.web.repository;
 
+import java.util.Optional;
 import org.ezalori.morph.web.model.DatabaseInstance;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -13,16 +14,13 @@ public class DatabaseInstanceRepository {
   /**
    * Get instance.
    */
-  public DatabaseInstance get(Integer id) {
-    if (id != null && id == 2) {
-      DatabaseInstance row = new DatabaseInstance();
-      row.setId(id);
-      row.setUrl(datasourceUrl);
-      row.setUsername("sa");
-      row.setPassword("");
-      return row;
-    }
-    return null;
+  public Optional<DatabaseInstance> get(Integer id) {
+    DatabaseInstance row = new DatabaseInstance();
+    row.setId(id);
+    row.setUrl(datasourceUrl);
+    row.setUsername("sa");
+    row.setPassword("");
+    return Optional.of(row);
   }
 
 }

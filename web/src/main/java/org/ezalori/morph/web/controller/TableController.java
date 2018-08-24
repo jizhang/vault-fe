@@ -76,7 +76,7 @@ public class TableController {
 
     if (form.getId() == null) {
       row.setCreateTime(now);
-      row.setId(repo.insert(row));
+      row.setId(repo.insert(row).orElseThrow(() -> new ApiException("fail to save table")));
     } else {
       repo.update(row);
     }

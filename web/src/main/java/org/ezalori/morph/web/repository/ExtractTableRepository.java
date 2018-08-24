@@ -70,7 +70,7 @@ public class ExtractTableRepository {
   /**
    * Insert new table.
    */
-  public int insert(ExtractTable row) {
+  public Optional<Integer> insert(ExtractTable row) {
     KeyHolder keyHolder = new GeneratedKeyHolder();
     jdbcTemplate.update(connection -> {
       PreparedStatement ps = connection.prepareStatement("INSERT INTO extract_table ("
@@ -104,8 +104,7 @@ public class ExtractTableRepository {
       }
     }, keyHolder);
 
-    Number generatedKey = keyHolder.getKey();
-    return generatedKey != null ? generatedKey.intValue() : 0;
+    return Optional.ofNullable(keyHolder.getKey()).map(Number::intValue);
   }
 
   /**
