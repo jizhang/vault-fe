@@ -1,8 +1,8 @@
 package org.ezalori.morph.web.model;
 
-import java.util.Date;
 import java.util.List;
 import lombok.Data;
+import org.joda.time.DateTime;
 
 @Data
 public class ExtractTable {
@@ -14,6 +14,6 @@ public class ExtractTable {
   private String targetDatabase;
   private String targetTable;
   private List<ExtractColumn> columns;
-  private Date createTime;
-  private Date updateTime;
+  private DateTime createTime;
+  private DateTime updateTime;
 }

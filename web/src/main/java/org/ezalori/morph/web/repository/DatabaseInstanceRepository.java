@@ -14,12 +14,15 @@ public class DatabaseInstanceRepository {
    * Get instance.
    */
   public DatabaseInstance get(Integer id) {
-    DatabaseInstance row = new DatabaseInstance();
-    row.setId(id);
-    row.setUrl(datasourceUrl);
-    row.setUsername("sa");
-    row.setPassword("");
-    return row;
+    if (id != null && id == 2) {
+      DatabaseInstance row = new DatabaseInstance();
+      row.setId(id);
+      row.setUrl(datasourceUrl);
+      row.setUsername("sa");
+      row.setPassword("");
+      return row;
+    }
+    return null;
   }
 
 }

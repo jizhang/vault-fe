@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import org.ezalori.morph.web.model.ExtractColumn;
 import org.ezalori.morph.web.model.ExtractTable;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -45,8 +46,8 @@ public class ExtractTableRepository {
     }
 
     row.setColumns(columns);
-    row.setCreateTime(rs.getTimestamp("create_time"));
-    row.setUpdateTime(rs.getTimestamp("update_time"));
+    row.setCreateTime(new DateTime(rs.getTimestamp("create_time")));
+    row.setUpdateTime(new DateTime(rs.getTimestamp("update_time")));
     return row;
   };
 
@@ -71,33 +72,40 @@ public class ExtractTableRepository {
    */
   public int insert(ExtractTable row) {
     KeyHolder keyHolder = new GeneratedKeyHolder();
-    int affectedRows = jdbcTemplate.update(connection -> {
+    jdbcTemplate.update(connection -> {
       PreparedStatement ps = connection.prepareStatement("INSERT INTO extract_table ("
           + " source_instance, source_database, source_table,"
           + " target_instance, target_database, target_table,"
           + " columns, create_time, update_time"
           + ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", new String[] { "id" });
-      ps.setInt(1, row.getSourceInstance());
-      ps.setString(2, row.getSourceDatabase());
-      ps.setString(3, row.getSourceTable());
-      ps.setInt(4, row.getTargetInstance());
-      ps.setString(5, row.getTargetDatabase());
-      ps.setString(6, row.getTargetTable());
-
-      String columns;
       try {
-        columns = objectMapper.writeValueAsString(row.getColumns());
-      } catch (Exception e) {
-        throw new SQLException("fail to serialize columns", e);
-      }
+        ps.setInt(1, row.getSourceInstance());
+        ps.setString(2, row.getSourceDatabase());
+        ps.setString(3, row.getSourceTable());
+        ps.setInt(4, row.getTargetInstance());
+        ps.setString(5, row.getTargetDatabase());
+        ps.setString(6, row.getTargetTable());
 
-      ps.setString(7, columns);
-      ps.setTimestamp(8, new Timestamp(row.getCreateTime().getTime()));
-      ps.setTimestamp(9, new Timestamp(row.getUpdateTime().getTime()));
-      return ps;
+        String columns;
+        try {
+          columns = objectMapper.writeValueAsString(row.getColumns());
+        } catch (Exception e) {
+          throw new SQLException("fail to serialize columns", e);
+        }
+
+        ps.setString(7, columns);
+        ps.setTimestamp(8, new Timestamp(row.getCreateTime().getMillis()));
+        ps.setTimestamp(9, new Timestamp(row.getUpdateTime().getMillis()));
+
+        return ps;
+      } catch (SQLException e) {
+        ps.close();
+        throw e;
+      }
     }, keyHolder);
 
-    return affectedRows > 0 ? keyHolder.getKey().intValue() : 0;
+    Number generatedKey = keyHolder.getKey();
+    return generatedKey != null ? generatedKey.intValue() : 0;
   }
 
   /**
@@ -124,7 +132,7 @@ public class ExtractTableRepository {
           }
 
           ps.setString(7, columns);
-          ps.setTimestamp(8, new Timestamp(row.getUpdateTime().getTime()));
+          ps.setTimestamp(8, new Timestamp(row.getUpdateTime().getMillis()));
           ps.setInt(9, row.getId());
         });
   }

@@ -72,10 +72,10 @@ public class TableController {
     row.setColumns(Arrays.asList(columns));
 
     DateTime now = DateTime.now();
-    row.setUpdateTime(now.toDate());
+    row.setUpdateTime(now);
 
     if (form.getId() == null) {
-      row.setCreateTime(now.toDate());
+      row.setCreateTime(now);
       row.setId(repo.insert(row));
     } else {
       repo.update(row);
