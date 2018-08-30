@@ -60,27 +60,33 @@
 }
 </style>
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+<script>
 import * as _ from 'lodash'
 
-@Component({})
-export default class List extends Vue {
-  public tables: any[] = []
+export default {
+  name: 'TableList',
 
-  public mounted() {
+  data () {
+    return {
+      tables: []
+    }
+  },
+
+  mounted () {
     fetch('/api/table/list')
       .then(response => response.json())
       .then(responseJson => {
         this.tables = responseJson.payload
       })
-  }
+  },
 
-  public editTable(table: any) {
-    this.$router.push({
-      path: '/table/edit',
-      query: _.pick(table, ['id']),
-    })
+  methods: {
+    editTable (table) {
+      this.$router.push({
+        path: '/table/edit',
+        query: _.pick(table, ['id'])
+      })
+    }
   }
 }
 </script>
