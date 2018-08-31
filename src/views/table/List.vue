@@ -8,7 +8,7 @@
       Tables
     </div>
     <el-table
-      :data="tables"
+      :data="tableList"
       style="width: 100%"
     >
       <el-table-column
@@ -60,27 +60,30 @@
 }
 </style>
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+<script>
 import * as _ from 'lodash'
+import { mapState } from 'vuex'
 
-@Component({})
-export default class List extends Vue {
-  public tables: any[] = []
+export default {
+  name: 'TableList',
 
-  public mounted() {
-    fetch('/api/table/list')
-      .then(response => response.json())
-      .then(responseJson => {
-        this.tables = responseJson.payload
+  computed: {
+    ...mapState('table', [
+      'tableList',
+    ]),
+  },
+
+  mounted () {
+    this.$store.dispatch('table/fetchTableList')
+  },
+
+  methods: {
+    editTable (table) {
+      this.$router.push({
+        path: '/table/edit',
+        query: _.pick(table, ['id'])
       })
-  }
-
-  public editTable(table: any) {
-    this.$router.push({
-      path: '/table/edit',
-      query: _.pick(table, ['id']),
-    })
+    }
   }
 }
 </script>

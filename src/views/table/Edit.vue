@@ -107,155 +107,114 @@
 }
 </style>
 
-<script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+<script>
 import * as _ from 'lodash'
-import * as qs from 'qs'
+import { mapState } from 'vuex'
 
-interface Column {
-  name: string,
-  extract: boolean,
-}
+export default {
+  name: 'TableEdit',
 
-interface Table {
-  id: number | null,
-  sourceInstance: number | '',
-  sourceDatabase: string,
-  sourceTable: string,
-  targetInstance: number | '',
-  targetDatabase: string,
-  targetTable: string,
-  columns: Column[],
-}
-
-@Component({})
-export default class Edit extends Vue {
-  public table: Table = {
-    id: null,
-    sourceInstance: '',
-    sourceDatabase: '',
-    sourceTable: '',
-    targetInstance: '',
-    targetDatabase: '',
-    targetTable: '',
-    columns: [],
-  }
-
-  public instanceOptions = [
-    { value: 1, label: 'dw_stage' },
-    { value: 2, label: 'zhuanqian' },
-  ]
-
-  public rules = {
-    sourceInstance: [
-      { required: true, message: 'Source instance is required' },
-    ],
-    sourceDatabase: [
-      { required: true, message: 'Source database is required' },
-    ],
-    sourceTable: [
-      { required: true, message: 'Source table is required' },
-    ],
-    targetInstance: [
-      { required: true, message: 'Target instance is required' },
-    ],
-    targetDatabase: [
-      { required: true, message: 'Target database is required' },
-    ],
-    targetTable: [
-      { required: true, message: 'Target table is required' },
-    ],
-    columns: [
-      {
-        validator(rule: any, value: Column[], callback: (error?: Error) => void) {
-          if (_.isEmpty(value)) {
-            callback(new Error('Columns are quired'))
-            return
-          }
-          callback()
-        },
-      },
-    ],
-  }
-
-  public mounted() {
-    let id = _.get(this.$route.query, 'id')
-    if (!_.isUndefined(id)) {
-      fetch(`/api/table/get?${qs.stringify({ id })}`)
-        .then(response => response.json())
-        .then(responseJson => {
-          _.assign(this.table, responseJson.payload)
-        })
-    }
-  }
-
-  public submit() {
-    (this.$refs.form as any).validate((valid: boolean) => {
-      if (!valid) {
-        return false
-      }
-
-      let data: any = _.clone(this.table)
-      data.columns = JSON.stringify(data.columns)
-
-      fetch('/api/table/save', {
-        method: 'POST',
-        body: qs.stringify(data),
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      })
-      .then(response => response.json())
-      .then(responseJson => {
-        if (responseJson.code !== 200) {
-          this.$message({
-            type: 'error',
-            message: responseJson.payload.message,
-          })
-          return
-        }
-
-        this.table.id = responseJson.payload.id
-        this.$message({
-          type: 'success',
-          message: 'Table is saved',
-        })
-      })
-    })
-  }
-
-  public importColumns() {
-    let form: any = this.$refs.form
-
-    let props = ['sourceInstance', 'sourceDatabase', 'sourceTable']
-    let promises = _.map(props, prop => {
-      return new Promise((resolve, reject) => {
-        form.validateField(prop, (errorMessage: string) => {
-          if (errorMessage) {
-            reject(new Error(errorMessage))
-          } else {
-            resolve()
-          }
-        })
-      })
-    })
-
-    Promise.all(promises).then(() => {
-      let params = _.pick(this.table, props)
-      fetch(`/api/table/columns?${qs.stringify(params)}`)
-        .then(response => response.json())
-        .then(responseJson => {
-          for (let column of responseJson.payload) {
-            let existing = _.find(this.table.columns, ['name', column.name])
-            if (_.isUndefined(existing)) {
-              this.table.columns.push({
-                name: column.name,
-                extract: true,
-              })
+  data () {
+    return {
+      instanceOptions: [
+        { value: 1, label: 'dw_stage' },
+        { value: 2, label: 'zhuanqian' }
+      ],
+      rules: {
+        sourceInstance: [
+          { required: true, message: 'Source instance is required' }
+        ],
+        sourceDatabase: [
+          { required: true, message: 'Source database is required' }
+        ],
+        sourceTable: [
+          { required: true, message: 'Source table is required' }
+        ],
+        targetInstance: [
+          { required: true, message: 'Target instance is required' }
+        ],
+        targetDatabase: [
+          { required: true, message: 'Target database is required' }
+        ],
+        targetTable: [
+          { required: true, message: 'Target table is required' }
+        ],
+        columns: [
+          {
+            validator (rule, value, callback) {
+              if (_.isEmpty(value)) {
+                callback(new Error('Columns are quired'))
+                return
+              }
+              callback()
             }
           }
+        ]
+      }
+    }
+  },
+
+  computed: {
+    ...mapState('table', [
+      'table',
+    ]),
+  },
+
+  beforeMount () {
+    this.$store.commit('table/resetTable')
+  },
+
+  mounted () {
+    let id = _.get(this.$route.query, 'id')
+    if (!_.isUndefined(id)) {
+      this.$store.dispatch('table/fetchTable', { id })
+    }
+  },
+
+  methods: {
+    submit () {
+      this.$refs.form.validate(valid => {
+        if (!valid) {
+          return false
+        }
+
+        let data = _.clone(this.table)
+        data.columns = JSON.stringify(data.columns)
+        this.$store.dispatch('table/save', data).then(() => {
+          this.$message({
+            type: 'success',
+            message: 'Table is saved',
+          })
+        }, error => {
+          this.$message({
+            type: 'error',
+            message: String(error),
+          })
         })
-    }).catch(_.noop)
+      })
+    },
+
+    importColumns () {
+      let form = this.$refs.form
+
+      let props = ['sourceInstance', 'sourceDatabase', 'sourceTable']
+      let promises = _.map(props, prop => {
+        return new Promise((resolve, reject) => {
+          form.validateField(prop, errorMessage => {
+            if (errorMessage) {
+              reject(new Error(errorMessage))
+            } else {
+              resolve()
+            }
+          })
+        })
+      })
+
+      Promise.all(promises).then(() => {
+        let params = _.pick(this.table, props)
+        this.$store.dispatch('table/fetchColumns', params)
+      }).catch(_.noop)
+    }
   }
 }
 </script>

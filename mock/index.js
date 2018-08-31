@@ -1,5 +1,3 @@
-const _ = require('lodash')
-const moment = require('moment')
 const express = require('express')
 
 const app = express()
@@ -34,6 +32,7 @@ app.get('/api/table/list', (req, res) => {
 
 app.post('/api/table/save', (req, res) => {
   res.json({
+    code: 200,
     payload: {
       id: 1,
     },
@@ -67,7 +66,7 @@ app.get('/api/table/columns', (req, res) => {
   ]
 
   res.json({
-    payload: columns,
+    payload: columns
   })
 })
 
