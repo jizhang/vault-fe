@@ -109,22 +109,13 @@
 
 <script>
 import * as _ from 'lodash'
-import * as qs from 'qs'
+import { mapState } from 'vuex'
 
 export default {
   name: 'TableEdit',
+
   data () {
     return {
-      table: {
-        id: null,
-        sourceInstance: '',
-        sourceDatabase: '',
-        sourceTable: '',
-        targetInstance: '',
-        targetDatabase: '',
-        targetTable: '',
-        columns: []
-      },
       instanceOptions: [
         { value: 1, label: 'dw_stage' },
         { value: 2, label: 'zhuanqian' }
@@ -163,14 +154,20 @@ export default {
     }
   },
 
+  computed: {
+    ...mapState('table', [
+      'table',
+    ]),
+  },
+
+  beforeMount () {
+    this.$store.commit('table/resetTable')
+  },
+
   mounted () {
     let id = _.get(this.$route.query, 'id')
     if (!_.isUndefined(id)) {
-      fetch(`/api/table/get?${qs.stringify({ id })}`)
-        .then(response => response.json())
-        .then(responseJson => {
-          _.assign(this.table, responseJson.payload)
-        })
+      this.$store.dispatch('table/fetchTable', { id })
     }
   },
 
@@ -183,30 +180,17 @@ export default {
 
         let data = _.clone(this.table)
         data.columns = JSON.stringify(data.columns)
-
-        fetch('/api/table/save', {
-          method: 'POST',
-          body: qs.stringify(data),
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-        })
-          .then(response => response.json())
-          .then(responseJson => {
-            if (responseJson.code !== 200) {
-              this.$message({
-                type: 'error',
-                message: responseJson.payload.message
-              })
-              return
-            }
-
-            this.table.id = responseJson.payload.id
-            this.$message({
-              type: 'success',
-              message: 'Table is saved'
-            })
+        this.$store.dispatch('table/save', data).then(() => {
+          this.$message({
+            type: 'success',
+            message: 'Table is saved',
           })
+        }, error => {
+          this.$message({
+            type: 'error',
+            message: String(error),
+          })
+        })
       })
     },
 
@@ -228,19 +212,7 @@ export default {
 
       Promise.all(promises).then(() => {
         let params = _.pick(this.table, props)
-        fetch(`/api/table/columns?${qs.stringify(params)}`)
-          .then(response => response.json())
-          .then(responseJson => {
-            for (let column of responseJson.payload) {
-              let existing = _.find(this.table.columns, ['name', column.name])
-              if (_.isUndefined(existing)) {
-                this.table.columns.push({
-                  name: column.name,
-                  extract: true
-                })
-              }
-            }
-          })
+        this.$store.dispatch('table/fetchColumns', params)
       }).catch(_.noop)
     }
   }

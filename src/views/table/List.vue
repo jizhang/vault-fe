@@ -8,7 +8,7 @@
       Tables
     </div>
     <el-table
-      :data="tables"
+      :data="tableList"
       style="width: 100%"
     >
       <el-table-column
@@ -62,22 +62,19 @@
 
 <script>
 import * as _ from 'lodash'
+import { mapState } from 'vuex'
 
 export default {
   name: 'TableList',
 
-  data () {
-    return {
-      tables: []
-    }
+  computed: {
+    ...mapState('table', [
+      'tableList',
+    ]),
   },
 
   mounted () {
-    fetch('/api/table/list')
-      .then(response => response.json())
-      .then(responseJson => {
-        this.tables = responseJson.payload
-      })
+    this.$store.dispatch('table/fetchTableList')
   },
 
   methods: {
