@@ -1,17 +1,8 @@
-import * as _ from 'lodash'
-import * as qs from 'qs'
+import _ from 'lodash'
+import * as service from '@/services/table'
 
-function defaultTable() {
-  return {
-    id: null,
-    sourceInstance: '',
-    sourceDatabase: '',
-    sourceTable: '',
-    targetInstance: '',
-    targetDatabase: '',
-    targetTable: '',
-    columns: [],
-  }
+const types = {
+  SAVE: 'save',
 }
 
 export default {
@@ -19,88 +10,59 @@ export default {
 
   state: {
     tableList: [],
-    table: defaultTable(),
-  },
-
-  mutations: {
-    save(state, payload) {
-      _.assign(state, payload)
-    },
-
-    saveTable(state, payload) {
-      _.assign(state.table, payload)
-    },
-
-    resetTable(state) {
-      state.table = defaultTable()
-    },
+    table: null,
+    columnList: [],
   },
 
   actions: {
-    fetchTableList({ commit }) {
-      fetch('/api/table/list')
-        .then(response => response.json())
-        .then(responseJson => {
-          commit({
-            type: 'save',
-            tableList: responseJson.payload,
-          })
+    async fetchTableList({ commit }, payload) {
+      let response = await service.queryTableList(payload)
+      if (response && response.payload) {
+        commit(types.SAVE, {
+          tableList: response.payload.tables,
         })
+      }
     },
 
-    fetchTable({ commit }, payload) {
-      let { id } = payload
-      fetch(`/api/table/get?${qs.stringify({ id })}`)
-        .then(response => response.json())
-        .then(responseJson => {
-          commit({
-            type: 'saveTable',
-            ...responseJson.payload,
-          })
+    async fetchTable({ commit }, payload) {
+      let response = await service.queryTable(payload)
+      if (response && response.payload) {
+        commit(types.SAVE, {
+          table: response.payload.table,
+          columnList: response.payload.columns,
         })
+      }
     },
 
-    async fetchColumns({ state, commit }, payload) {
-      let response = await fetch(`/api/table/columns?${qs.stringify(payload)}`)
-      let responseJson = await response.json()
-
-      let columns = _(responseJson.payload)
-        .filter(column => {
-          let existing = _.find(state.table.columns, ['name', column.name])
-          return _.isUndefined(existing)
+    async fetchColumns({ commit }, payload) {
+      let response = await service.queryColumns(payload)
+      if (response && response.payload) {
+        commit(types.SAVE, {
+          columnList: response.payload.columns,
         })
-        .map(column => {
-          return {
-            name: column.name,
-            extract: true,
-          }
-        })
-        .value()
-
-      commit({
-        type: 'saveTable',
-        columns: _.concat(state.table.columns, columns),
-      })
+      }
     },
 
     async save({ commit }, payload) {
-      let response = await fetch('/api/table/save', {
-        method: 'POST',
-        body: qs.stringify(payload),
-        heasers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-      })
-      let responseJson = await response.json()
-
-      if (responseJson.code !== 200) {
-        throw new Error(responseJson.payload.message)
+      let response = await service.saveTable(payload)
+      if (response && response.payload) {
+        commit(types.SAVE, {
+          table: {
+            ...payload,
+            id: response.payload.id,
+          },
+        })
       }
+    },
 
-      commit({
-        type: 'saveTable',
-        id: responseJson.payload.id,
-      })
+    async deleteTable({ commit }, payload) {
+      await service.deleteTable(payload)
+    },
+  },
+
+  mutations: {
+    [types.SAVE](state, payload) {
+      _.assign(state, payload)
     },
   },
 }

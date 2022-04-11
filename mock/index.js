@@ -17,16 +17,15 @@ app.get('/api/table/list', (req, res) => {
     targetInstance: 1,
     targetDatabase: 'dw_stage',
     targetTable: 'ds_user',
-    columns: [
-      { name: 'id' },
-      { name: 'create_day' },
-    ],
-    createTime: '2018-08-18 15:53:01',
-    updateTime: '2018-08-18 15:53:01',
+    columnList: 'id,create_day',
+    createdAt: '2018-08-18 15:53:01',
+    updatedAt: '2018-08-18 15:53:01',
   }]
 
   res.json({
-    payload: tables,
+    payload: {
+      tables,
+    },
   })
 })
 
@@ -48,25 +47,34 @@ app.get('/api/table/get', (req, res) => {
     targetInstance: 1,
     targetDatabase: 'dw_stage',
     targetTable: 'ds_user',
-    columns: [
-      { name: 'id', extract: true },
-      { name: 'create_day', extract: true },
-    ],
+    columnList: 'id,create_day',
   }
 
+  let columns = ['id', 'nickname', 'create_day']
+
   res.json({
-    payload: table,
+    payload: {
+      table,
+      columns,
+    }
   })
 })
 
 app.get('/api/table/columns', (req, res) => {
-  let columns = [
-    { name: 'id' },
-    { name: 'create_day' },
-  ]
+  let columns = ['id', 'nickname', 'create_day']
 
   res.json({
-    payload: columns
+    payload: {
+      columns,
+    }
+  })
+})
+
+app.post('/api/table/delete', (req, res) => {
+  res.json({
+    payload: {
+      message: 'ok',
+    },
   })
 })
 

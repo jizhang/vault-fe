@@ -1,13 +1,14 @@
 <template>
   <div class="page-table-edit">
     <div class="page-title">
-      <span v-if="table.id">Edit Table</span>
+      <span v-if="tableForm.id">Edit Table</span>
       <span v-else>New Table</span>
     </div>
 
-    <el-form ref="form" :model="table" label-width="150px" style="width: 650px;" :rules="rules">
+    <el-form ref="form" :model="tableForm" label-width="150px" style="width: 650px;" :rules="rules">
+      <el-input type="hidden" v-model="tableForm.id" prop="id"></el-input>
       <el-form-item label="Source Instance" prop="sourceInstance">
-        <el-select v-model="table.sourceInstance" placeholder="Select" style="width: 162px;">
+        <el-select v-model="tableForm.sourceInstance" placeholder="Select" style="width: 162px;">
           <el-option
             v-for="item in instanceOptions"
             :key="item.value"
@@ -19,17 +20,17 @@
       <el-form-item label="Source Table">
         <el-col :span="8" style="padding-right: 5px;">
           <el-form-item prop="sourceDatabase">
-            <el-input v-model="table.sourceDatabase" placeholder="Database"/>
+            <el-input v-model="tableForm.sourceDatabase" placeholder="Database"/>
           </el-form-item>
         </el-col>
         <el-col :span="16" style="padding-left: 5px;">
           <el-form-item prop="sourceTable">
-            <el-input v-model="table.sourceTable" placeholder="Table" />
+            <el-input v-model="tableForm.sourceTable" placeholder="Table" />
           </el-form-item>
         </el-col>
       </el-form-item>
       <el-form-item label="Target Instance" prop="targetInstance">
-        <el-select v-model="table.targetInstance" placeholder="Select" style="width: 162px;">
+        <el-select v-model="tableForm.targetInstance" placeholder="Select" style="width: 162px;">
           <el-option
             v-for="item in instanceOptions"
             :key="item.value"
@@ -41,33 +42,33 @@
       <el-form-item label="Target Table">
         <el-col :span="8" style="padding-right: 5px;">
           <el-form-item prop="targetDatabase">
-            <el-input v-model="table.targetDatabase" placeholder="Database"/>
+            <el-input v-model="tableForm.targetDatabase" placeholder="Database"/>
           </el-form-item>
         </el-col>
         <el-col :span="16" style="padding-left: 5px;">
           <el-form-item prop="targetTable">
-            <el-input v-model="table.targetTable" placeholder="Table" />
+            <el-input v-model="tableForm.targetTable" placeholder="Table" />
           </el-form-item>
         </el-col>
       </el-form-item>
-      <el-form-item label="Columns" prop="columns">
+      <el-form-item label="Columns" prop="columnList">
         <table class="table-columns">
           <tr>
             <th>Name</th>
             <th>Extract</th>
           </tr>
-          <tr v-for="col in table.columns" :key="col.name">
+          <tr v-for="col in columnOptions" :key="col.name">
             <td>{{col.name}}</td>
             <td>
-              <el-checkbox v-model="col.extract" />
+              <el-checkbox v-model="col.extract"></el-checkbox>
             </td>
           </tr>
         </table>
-        <el-button size="mini" @click="importColumns()">Import Columns</el-button>
+        <el-button size="mini" @click="onImportColumns()">Import Columns</el-button>
       </el-form-item>
       <el-form-item style="padding-top: 10px;">
-        <el-button type="primary" @click="submit()">Submit</el-button>
-        <el-button>Cancel</el-button>
+        <el-button type="primary" @click="onSubmit()">Submit</el-button>
+        <el-button @click="onCancel()">Cancel</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -108,8 +109,8 @@
 </style>
 
 <script>
-import * as _ from 'lodash'
-import { mapState } from 'vuex'
+import _ from 'lodash'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   name: 'TableEdit',
@@ -120,6 +121,17 @@ export default {
         { value: 1, label: 'dw_stage' },
         { value: 2, label: 'zhuanqian' }
       ],
+      columnOptions: [],
+      tableForm: {
+        id: '',
+        sourceInstance: '',
+        sourceDatabase: '',
+        sourceTable: '',
+        targetInstance: '',
+        targetDatabase: '',
+        targetTable: '',
+        columnList: '',
+      },
       rules: {
         sourceInstance: [
           { required: true, message: 'Source instance is required' }
@@ -139,17 +151,18 @@ export default {
         targetTable: [
           { required: true, message: 'Target table is required' }
         ],
-        columns: [
+        columnList: [
           {
-            validator (rule, value, callback) {
-              if (_.isEmpty(value)) {
-                callback(new Error('Columns are quired'))
-                return
+            validator: (rule, value, callback) => {
+              let selected = _(this.columnOptions).filter('extract').size()
+              if (selected === 0) {
+                callback(new Error('Column list cannot be empty.'))
+              } else {
+                callback()
               }
-              callback()
-            }
-          }
-        ]
+            },
+          },
+        ],
       }
     }
   },
@@ -157,30 +170,42 @@ export default {
   computed: {
     ...mapState('table', [
       'table',
+      'columnList',
     ]),
   },
 
-  beforeMount () {
-    this.$store.commit('table/resetTable')
-  },
-
-  mounted () {
+  mounted() {
     let id = _.get(this.$route.query, 'id')
     if (!_.isUndefined(id)) {
-      this.$store.dispatch('table/fetchTable', { id })
+      let payload = { id }
+      this.fetchTable(payload).then(() => {
+        _.assign(this.tableForm, this.table)
+        this.refreshColumnOptions()
+      })
     }
   },
 
   methods: {
-    submit () {
+    ...mapActions('table', [
+      'fetchTable',
+      'fetchColumns',
+      'save',
+    ]),
+
+    onSubmit() {
       this.$refs.form.validate(valid => {
         if (!valid) {
           return false
         }
 
-        let data = _.clone(this.table)
-        data.columns = JSON.stringify(data.columns)
-        this.$store.dispatch('table/save', data).then(() => {
+        let selected = _(this.columnOptions).filter('extract').map('name').value()
+        if (selected.length === this.columnList.length) {
+          selected = []
+        }
+        this.tableForm.columnList = _.join(selected, ',')
+
+        this.save(this.tableForm).then(() => {
+          this.tableForm.id = this.table.id
           this.$message({
             type: 'success',
             message: 'Table is saved',
@@ -194,7 +219,13 @@ export default {
       })
     },
 
-    importColumns () {
+    onCancel() {
+      this.$router.push({
+        path: '/table/list',
+      })
+    },
+
+    onImportColumns() {
       let form = this.$refs.form
 
       let props = ['sourceInstance', 'sourceDatabase', 'sourceTable']
@@ -211,10 +242,27 @@ export default {
       })
 
       Promise.all(promises).then(() => {
-        let params = _.pick(this.table, props)
-        this.$store.dispatch('table/fetchColumns', params)
+        let params = _.pick(this.tableForm, props)
+        this.fetchColumns(params).then(() => {
+          if (_.isEmpty(this.columnList)) {
+            this.$message({
+              type: 'error',
+              message: 'Table not found',
+            })
+            return
+          }
+          this.refreshColumnOptions()
+        })
       }).catch(_.noop)
-    }
-  }
+    },
+
+    refreshColumnOptions() {
+      let selected = _.filter(_.split(this.tableForm.columnList, ','))
+      this.columnOptions = _.map(this.columnList, name => {
+        let extract = _.isEmpty(selected) ? true : _.includes(selected, name)
+        return { name, extract }
+      })
+    },
+  },
 }
 </script>
