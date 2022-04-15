@@ -1,4 +1,4 @@
-const path = require('path')
+const glob = require('glob')
 const apiMocker = require('mocker-api')
 
 let devServer = {}
@@ -11,7 +11,7 @@ if (process.env.MOCK === 'none') {
   }
 } else {
   devServer.setupMiddlewares = (middlewares, devServer) => {
-    apiMocker(devServer.app, path.resolve('./mock/index.js'))
+    apiMocker(devServer.app, glob.sync('mock/**/*.js'))
     return middlewares
   }
 }

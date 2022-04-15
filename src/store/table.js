@@ -15,44 +15,36 @@ export default {
   },
 
   actions: {
-    async fetchTableList({ commit }, payload) {
-      let response = await service.queryTableList(payload)
-      if (response && response.payload) {
-        commit(types.SAVE, {
-          tableList: response.payload.tables,
-        })
-      }
+    async getTableList({ commit }, payload) {
+      let response = await service.getTableList(payload)
+      commit(types.SAVE, {
+        tableList: response.tables,
+      })
     },
 
-    async fetchTable({ commit }, payload) {
-      let response = await service.queryTable(payload)
-      if (response && response.payload) {
-        commit(types.SAVE, {
-          table: response.payload.table,
-          columnList: response.payload.columns,
-        })
-      }
+    async getTable({ commit }, payload) {
+      let response = await service.getTable(payload)
+      commit(types.SAVE, {
+        table: response.table,
+        columnList: response.columns,
+      })
     },
 
-    async fetchColumns({ commit }, payload) {
-      let response = await service.queryColumns(payload)
-      if (response && response.payload) {
-        commit(types.SAVE, {
-          columnList: response.payload.columns,
-        })
-      }
+    async getTableColumns({ commit }, payload) {
+      let response = await service.getTableColumns(payload)
+      commit(types.SAVE, {
+        columnList: response.columns,
+      })
     },
 
-    async save({ commit }, payload) {
+    async saveTable({ commit }, payload) {
       let response = await service.saveTable(payload)
-      if (response && response.payload) {
-        commit(types.SAVE, {
-          table: {
-            ...payload,
-            id: response.payload.id,
-          },
-        })
-      }
+      commit(types.SAVE, {
+        table: {
+          ...payload,
+          id: response.id,
+        },
+      })
     },
 
     async deleteTable({ commit }, payload) {

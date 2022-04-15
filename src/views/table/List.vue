@@ -52,12 +52,12 @@ export default {
   },
 
   mounted () {
-    this.fetchTableList()
+    this.getTableList()
   },
 
   methods: {
     ...mapActions('table', [
-      'fetchTableList',
+      'getTableList',
       'deleteTable',
     ]),
 
@@ -76,7 +76,7 @@ export default {
       }).then(() => {
         let payload = _.pick(table, ['id'])
         this.deleteTable(payload).then(() => {
-          this.fetchTableList()
+          this.getTableList()
         })
       }).catch(_.noop)
     },

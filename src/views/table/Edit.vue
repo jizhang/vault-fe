@@ -64,11 +64,11 @@
             </td>
           </tr>
         </table>
-        <el-button size="mini" @click="onImportColumns()">Import Columns</el-button>
+        <el-button size="mini" @click="onImportColumns">Import Columns</el-button>
       </el-form-item>
       <el-form-item style="padding-top: 10px;">
-        <el-button type="primary" @click="onSubmit()">Submit</el-button>
-        <el-button @click="onCancel()">Cancel</el-button>
+        <el-button type="primary" @click="onSubmit">Submit</el-button>
+        <el-button @click="onCancel">Cancel</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -178,7 +178,7 @@ export default {
     let id = _.get(this.$route.query, 'id')
     if (!_.isUndefined(id)) {
       let payload = { id }
-      this.fetchTable(payload).then(() => {
+      this.getTable(payload).then(() => {
         _.assign(this.tableForm, this.table)
         this.refreshColumnOptions()
       })
@@ -187,9 +187,9 @@ export default {
 
   methods: {
     ...mapActions('table', [
-      'fetchTable',
-      'fetchColumns',
-      'save',
+      'getTable',
+      'getTableColumns',
+      'saveTable',
     ]),
 
     onSubmit() {
@@ -204,7 +204,7 @@ export default {
         }
         this.tableForm.columnList = _.join(selected, ',')
 
-        this.save(this.tableForm).then(() => {
+        this.saveTable(this.tableForm).then(() => {
           this.tableForm.id = this.table.id
           this.$message({
             type: 'success',
@@ -243,7 +243,7 @@ export default {
 
       Promise.all(promises).then(() => {
         let params = _.pick(this.tableForm, props)
-        this.fetchColumns(params).then(() => {
+        this.getTableColumns(params).then(() => {
           if (_.isEmpty(this.columnList)) {
             this.$message({
               type: 'error',

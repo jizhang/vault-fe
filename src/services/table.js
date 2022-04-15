@@ -1,14 +1,14 @@
 import request from '@/utils/request'
 
-export async function queryTableList(params) {
+export async function getTableList(params) {
   return request('/table/list', { params })
 }
 
-export async function queryTable(params) {
+export async function getTable(params) {
   return request('/table/get', { params })
 }
 
-export async function queryColumns(params) {
+export async function getTableColumns(params) {
   return request('/table/columns', { params })
 }
 
