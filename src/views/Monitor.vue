@@ -1,11 +1,3 @@
 <template>
-  <div class="page-monitor">
-    Coming soon...
-  </div>
+  <div>Coming soon...</div>
 </template>
-
-<script>
-export default {
-  name: 'Monitor'
-}
-</script>

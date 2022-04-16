@@ -1,85 +1,62 @@
-<template>
-  <div class="page-etl">
-    <div class="title-button">
-      <el-button type="primary" size="mini" @click="$router.push('/table/edit')">New</el-button>
-    </div>
+<script setup lang="ts">
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
-    <div class="page-title">
-      Tables
+const router = useRouter()
+
+function onNew() {
+  router.push({ path: '/table/edit' })
+}
+
+const tableList = ref([
+  {
+    id: 1,
+    sourceInstance: 2,
+    sourceDatabase: 'zhuanqian',
+    sourceTable: 'user',
+    targetInstance: 1,
+    targetDatabase: 'dw_stage',
+    targetTable: 'ds_user',
+    columnList: 'id,create_day',
+    createdAt: '2018-08-18 15:53:01',
+    updatedAt: '2018-08-18 15:53:01',
+  },
+])
+</script>
+
+<template>
+  <div class="page-table-list">
+    <div class="title-button">
+      <el-button type="primary" size="small" @click="onNew">New</el-button>
     </div>
-    <el-table :data="tableList" style="width: 100%">
+    <div class="page-title">Tables</div>
+
+    <el-table :data="tableList">
       <el-table-column prop="id" label="#" min-width="50"></el-table-column>
       <el-table-column prop="sourceDatabase" label="Source DB" min-width="150"></el-table-column>
       <el-table-column prop="sourceTable" label="Source Table" min-width="150"></el-table-column>
       <el-table-column prop="targetTable" label="Target Table" min-width="150"></el-table-column>
       <el-table-column prop="createdAt" label="Create Time" min-width="180"></el-table-column>
       <el-table-column label="Operations" min-width="120">
-        <template slot-scope="scope">
-          <el-button type="text" @click="onEdit(scope.row)">Edit</el-button>
-          <el-button type="text" @click="onDelete(scope.row)">Delete</el-button>
+        <template #default>
+          <el-button type="text">Edit</el-button>
+          <el-button type="text">Delete</el-button>
         </template>
       </el-table-column>
     </el-table>
   </div>
 </template>
 
-<style lang="scss">
-.page-etl {
-  .page-title {
-    font-size: 14px;
-    line-height: 28px;
+<style>
+.page-table-list {
+  & .page-title {
+    line-height: 24px;
     font-weight: bold;
     margin-bottom: 20px;
   }
 
-  .title-button {
+  & .title-button {
     float: right;
   }
 }
 </style>
-
-<script>
-import _ from 'lodash'
-import { mapState, mapActions } from 'vuex'
-
-export default {
-  name: 'TableList',
-
-  computed: {
-    ...mapState('table', [
-      'tableList',
-    ]),
-  },
-
-  mounted () {
-    this.getTableList()
-  },
-
-  methods: {
-    ...mapActions('table', [
-      'getTableList',
-      'deleteTable',
-    ]),
-
-    onEdit(table) {
-      this.$router.push({
-        path: '/table/edit',
-        query: _.pick(table, ['id']),
-      })
-    },
-
-    onDelete(table) {
-      this.$confirm(`Are you sure to delete ${table.targetTable}?`, 'Warning', {
-        confirmButtonText: 'OK',
-        cancelButtonText: 'Cancel',
-        type: 'warning'
-      }).then(() => {
-        let payload = _.pick(table, ['id'])
-        this.deleteTable(payload).then(() => {
-          this.getTableList()
-        })
-      }).catch(_.noop)
-    },
-  },
-}
-</script>

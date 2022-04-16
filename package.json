@@ -1,53 +1,50 @@
 {
-  "name": "morph-fe",
-  "version": "0.1.0",
-  "private": true,
+  "name": "morph-fe-vue3",
+  "version": "0.0.0",
   "scripts": {
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "start": "vue-cli-service serve",
-    "start:local": "cross-env MOCK=none vue-cli-service serve"
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview --port 5050",
+    "test:unit": "vitest --environment jsdom",
+    "test:e2e": "start-server-and-test preview http://127.0.0.1:5050/ 'cypress open'",
+    "test:e2e:ci": "start-server-and-test preview http://127.0.0.1:5050/ 'cypress run'",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "core-js": "^3.8.3",
-    "element-ui": "^2.4.5",
-    "lodash": "^4.17.10",
-    "moment": "^2.22.2",
-    "qs": "^6.5.2",
-    "vue": "^2.5.16",
-    "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "@element-plus/icons-vue": "^1.1.4",
+    "element-plus": "^2.1.9",
+    "pinia": "^2.0.13",
+    "vue": "^3.2.31",
+    "vue-router": "^4.0.14"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/eslint-parser": "^7.12.16",
-    "@vue/cli-plugin-babel": "~5.0.4",
-    "@vue/cli-plugin-eslint": "~5.0.4",
-    "@vue/cli-service": "~5.0.4",
-    "@vue/eslint-config-standard": "^6.1.0",
-    "cross-env": "^7.0.3",
-    "eslint": "^7.32.0",
-    "eslint-plugin-import": "^2.25.3",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.0",
-    "eslint-plugin-vue": "^8.0.3",
-    "glob": "^7.0.0",
-    "lint-staged": "^7.2.0",
-    "mocker-api": "^2.9.5",
-    "node-sass": "^4.9.0",
-    "sass-loader": "^7.0.1",
-    "vue-template-compiler": "^2.5.17"
+    "@rushstack/eslint-patch": "^1.1.0",
+    "@types/jsdom": "^16.2.14",
+    "@types/node": "^16.11.26",
+    "@vitejs/plugin-vue": "^2.3.1",
+    "@vitejs/plugin-vue-jsx": "^1.3.9",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "@vue/eslint-config-typescript": "^10.0.0",
+    "@vue/test-utils": "^2.0.0-rc.18",
+    "@vue/tsconfig": "^0.1.3",
+    "cypress": "^9.5.3",
+    "eslint": "^8.5.0",
+    "eslint-plugin-cypress": "^2.12.1",
+    "eslint-plugin-vue": "^8.2.0",
+    "jsdom": "^19.0.0",
+    "postcss-nesting": "^10.1.4",
+    "prettier": "^2.5.1",
+    "start-server-and-test": "^1.14.0",
+    "typescript": "~4.6.3",
+    "unplugin-auto-import": "^0.7.1",
+    "unplugin-vue-components": "^0.19.3",
+    "vite": "^2.9.1",
+    "vitest": "^0.8.1",
+    "vue-tsc": "^0.33.9"
   },
   "engines": {
-    "node": ">=12.22.0"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,vue}": [
-      "npm run lint",
-      "git add"
-    ]
+    "node": ">=16.10.0",
+    "npm": "^8.6.0"
   }
 }
