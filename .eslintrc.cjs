@@ -17,6 +17,12 @@ module.exports = {
       files: ['cypress/integration/**.spec.{js,ts,jsx,tsx}'],
       extends: ['plugin:cypress/recommended'],
     },
+    {
+      files: ['*.config.js', 'mock/**/*.js'],
+      env: {
+        node: true,
+      },
+    },
   ],
   ignorePatterns: ['auto-imports.d.ts', 'components.d.ts'],
   rules: {

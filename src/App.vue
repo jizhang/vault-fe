@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import { Sort, Bell } from '@element-plus/icons-vue'
+import 'element-plus/es/components/message/style/css'
 </script>
 
 <template>

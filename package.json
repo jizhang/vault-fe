@@ -1,6 +1,6 @@
 {
-  "name": "morph-fe-vue3",
-  "version": "0.0.0",
+  "name": "morph-fe",
+  "version": "0.1.0",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
@@ -15,6 +15,7 @@
     "@element-plus/icons-vue": "^1.1.4",
     "element-plus": "^2.1.9",
     "pinia": "^2.0.13",
+    "qs": "^6.10.3",
     "vue": "^3.2.31",
     "vue-router": "^4.0.14"
   },
@@ -22,6 +23,7 @@
     "@rushstack/eslint-patch": "^1.1.0",
     "@types/jsdom": "^16.2.14",
     "@types/node": "^16.11.26",
+    "@types/qs": "^6.9.7",
     "@vitejs/plugin-vue": "^2.3.1",
     "@vitejs/plugin-vue-jsx": "^1.3.9",
     "@vue/eslint-config-prettier": "^7.0.0",
