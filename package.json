@@ -1,8 +1,9 @@
 {
   "name": "morph-fe",
   "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev": "vite",
+    "start": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview --port 5050",
     "test:unit": "vitest --environment jsdom",
@@ -46,7 +47,7 @@
     "vue-tsc": "^0.33.9"
   },
   "engines": {
-    "node": ">=16.10.0",
-    "npm": "^8.6.0"
+    "node": ">=16.14.2",
+    "yarn": "^1.22.18"
   }
 }
