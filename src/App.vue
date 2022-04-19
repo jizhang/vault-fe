@@ -2,6 +2,7 @@
 import { RouterView } from 'vue-router'
 import { Sort, Bell } from '@element-plus/icons-vue'
 import 'element-plus/es/components/message/style/css'
+import 'element-plus/es/components/notification/style/css'
 </script>
 
 <template>
