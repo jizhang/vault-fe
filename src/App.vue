@@ -11,10 +11,14 @@ import 'element-plus/es/components/notification/style/css'
     <el-container>
       <el-aside width="240px">
         <el-menu :router="true" default-active="/table/list" style="height: 100%">
-          <el-menu-item index="/table/list">
-            <el-icon><Sort /></el-icon>
-            <span>ETL</span>
-          </el-menu-item>
+          <el-sub-menu index="/table">
+            <template #title>
+              <el-icon><Sort /></el-icon>
+              <span>ETL</span>
+            </template>
+            <el-menu-item index="/table/list">Extract Tables</el-menu-item>
+            <el-menu-item index="/db/list">Database Instances</el-menu-item>
+          </el-sub-menu>
           <el-menu-item index="/monitor">
             <el-icon><Bell /></el-icon>
             <span>Monitor</span>

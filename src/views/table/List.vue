@@ -35,15 +35,15 @@ function deleteTable(id: number) {
     <div class="title-button">
       <el-button type="primary" size="small" @click="createTable">New</el-button>
     </div>
-    <div class="page-title">Tables</div>
+    <div class="page-title">Extract Tables</div>
 
     <el-table :data="store.tableList">
-      <el-table-column prop="id" label="#" min-width="50"></el-table-column>
-      <el-table-column prop="sourceDatabase" label="Source DB" min-width="150"></el-table-column>
-      <el-table-column prop="sourceTable" label="Source Table" min-width="150"></el-table-column>
-      <el-table-column prop="targetTable" label="Target Table" min-width="150"></el-table-column>
-      <el-table-column prop="createdAt" label="Create Time" min-width="180"></el-table-column>
-      <el-table-column label="Operations" min-width="120">
+      <el-table-column prop="id" label="#" width="50"></el-table-column>
+      <el-table-column prop="sourceDatabase" label="Source DB"></el-table-column>
+      <el-table-column prop="sourceTable" label="Source Table"></el-table-column>
+      <el-table-column prop="targetTable" label="Target Table"></el-table-column>
+      <el-table-column prop="createdAt" label="Create Time" width="180"></el-table-column>
+      <el-table-column label="Operations" width="120">
         <template #default="scope">
           <el-button type="text" @click="editTable(scope.row.id)">Edit</el-button>
           <el-popconfirm title="Are you sure to delete this?" @confirm="deleteTable(scope.row.id)">

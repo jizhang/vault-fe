@@ -29,10 +29,7 @@ export const useTableStore = defineStore('table', {
 
     async saveTable(data: object) {
       const response = await service.saveTable(data)
-      this.table = {
-        ...data,
-        id: response.id,
-      }
+      this.table.id = response.id
     },
 
     async deleteTable(data: object) {
