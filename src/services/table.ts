@@ -1,21 +1,21 @@
-import request from '@/utils/request'
+import api from '@/utils/api'
 
 export async function getTableList() {
-  return request('/table/list')
+  return api.get('/table/list')
 }
 
 export async function getTableColumns(params: object) {
-  return request('/table/columns', { params })
+  return api.get('/table/columns', params)
 }
 
 export async function getTable(params: object) {
-  return request('/table/get', { params })
+  return api.get('/table/get', params)
 }
 
 export async function saveTable(data: object) {
-  return request('/table/save', { data })
+  return api.post('/table/save', data)
 }
 
 export async function deleteTable(data: object) {
-  return request('/table/delete', { data })
+  return api.post('/table/delete', data)
 }
