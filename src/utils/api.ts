@@ -1,5 +1,6 @@
 import qs from 'qs'
 import { ElNotification } from 'element-plus'
+import router from '@/router'
 
 function showError(message: string) {
   ElNotification({
@@ -31,11 +32,6 @@ async function handleBadRequest(response: Response) {
 async function request(url: string, config: RequestInit) {
   url = '/api' + url
 
-  config.headers = {
-    ...config.headers,
-    Authorization: 'Basic ' + window.btoa('admin:password'),
-  }
-
   let response
   try {
     response = await fetch(url, config)
@@ -54,10 +50,11 @@ async function request(url: string, config: RequestInit) {
   }
 
   if (response.status === 401) {
-    // TODO login
+    router.push('/login')
+  } else {
+    showError(response.statusText)
   }
 
-  showError(response.statusText)
   throw {
     status: response.status,
     message: response.statusText,

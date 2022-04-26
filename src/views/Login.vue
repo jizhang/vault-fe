@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import type { FormInstance, FormRules } from 'element-plus'
+import { ElMessage } from 'element-plus'
+import useStore from '@/stores/user'
+
+const router = useRouter()
+const store = useStore()
 
 const loginForm = reactive({
   username: '',
@@ -19,7 +25,15 @@ function login() {
     if (!isValid) {
       return
     }
-    console.log(loginForm)
+
+    store
+      .login(loginForm.username, loginForm.password)
+      .then(() => {
+        router.push('/table/list')
+      })
+      .catch(() => {
+        ElMessage.error('Invalid username or password.')
+      })
   })
 }
 </script>
