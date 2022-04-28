@@ -1,11 +1,24 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
+import { useRouter, RouterView } from 'vue-router'
 import { Sort, Bell } from '@element-plus/icons-vue'
+import useStore from '@/stores/auth'
+
+const router = useRouter()
+const store = useStore()
+
+function logout() {
+  store.logout().then(() => {
+    router.push('/login')
+  })
+}
 </script>
 
 <template>
   <el-container style="height: 100vh">
-    <el-header class="app-header"><img src="@/assets/logo.svg" />Morph</el-header>
+    <el-header class="app-header">
+      <img src="@/assets/logo.svg" />Morph
+      <el-button @click="logout">Logout</el-button>
+    </el-header>
     <el-container>
       <el-aside width="240px">
         <el-menu :router="true" default-active="/table/list" style="height: 100%">

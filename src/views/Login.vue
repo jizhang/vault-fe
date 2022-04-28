@@ -3,7 +3,7 @@ import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import type { FormInstance, FormRules } from 'element-plus'
 import { ElMessage } from 'element-plus'
-import useStore from '@/stores/user'
+import useStore from '@/stores/auth'
 
 const router = useRouter()
 const store = useStore()
@@ -26,14 +26,10 @@ function login() {
       return
     }
 
-    store
-      .login(loginForm.username, loginForm.password)
-      .then(() => {
-        router.push('/table/list')
-      })
-      .catch(() => {
-        ElMessage.error('Invalid username or password.')
-      })
+    store.login(loginForm).then(() => {
+      ElMessage.success(`Welcome, ${store.currentUser?.username}!`)
+      router.push('/table/list')
+    })
   })
 }
 </script>
