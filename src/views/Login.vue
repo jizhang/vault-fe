@@ -47,7 +47,7 @@ function login() {
         <el-input v-model="loginForm.username" />
       </el-form-item>
       <el-form-item label="Password" prop="password">
-        <el-input v-model="loginForm.password" type="password" />
+        <el-input v-model="loginForm.password" type="password" @keyup.enter="login" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="login">Login</el-button>

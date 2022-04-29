@@ -2,14 +2,19 @@ import { defineStore } from 'pinia'
 import * as service from '@/services/auth'
 
 interface State {
-  currentUser?: {
-    id: number
+  currentUser: {
+    id: number | null
     username: string
   }
 }
 
 export default defineStore('auth', {
-  state: (): State => ({}),
+  state: (): State => ({
+    currentUser: {
+      id: null,
+      username: '',
+    },
+  }),
 
   actions: {
     async login(data: object) {
@@ -18,6 +23,11 @@ export default defineStore('auth', {
 
     async logout() {
       await service.logout()
+      this.$reset()
+    },
+
+    async getCurrentUser() {
+      this.currentUser = await service.getCurrentUser()
     },
   },
 })

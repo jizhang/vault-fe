@@ -1,23 +1,36 @@
 <script setup lang="ts">
+import { onMounted } from 'vue'
 import { useRouter, RouterView } from 'vue-router'
-import { Sort, Bell } from '@element-plus/icons-vue'
-import useStore from '@/stores/auth'
+import { Sort, Bell, ArrowDown, User } from '@element-plus/icons-vue'
+import useAuthStore from '@/stores/auth'
 
 const router = useRouter()
-const store = useStore()
+const authStore = useAuthStore()
 
-function logout() {
-  store.logout().then(() => {
-    router.push('/login')
-  })
+onMounted(() => {
+  if (!authStore.currentUser.id) {
+    authStore.getCurrentUser()
+  }
+})
+
+async function logout() {
+  await authStore.logout()
+  router.push('/login')
 }
 </script>
 
 <template>
   <el-container style="height: 100vh">
     <el-header class="app-header">
-      <img src="@/assets/logo.svg" />Morph
-      <el-button @click="logout">Logout</el-button>
+      <img src="@/assets/logo.svg" class="logo" /><span class="app-title">Morph</span>
+      <el-dropdown class="user-menu">
+        {{ authStore.currentUser?.username }} <el-icon><ArrowDown /></el-icon>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item :icon="User" @click="logout">Logout</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </el-header>
     <el-container>
       <el-aside width="240px">
@@ -43,17 +56,26 @@ function logout() {
 
 <style>
 .app-header {
-  font-size: var(--el-font-size-extra-large);
-  font-weight: bold;
-  line-height: 60px;
-  color: var(--el-text-color-primary);
   box-shadow: 0 2px 8px var(--el-border-color-lighter);
   margin-bottom: 10px;
 
-  & img {
+  & .app-title {
+    font-size: var(--el-font-size-extra-large);
+    font-weight: bold;
+    line-height: 60px;
+    color: var(--el-text-color-primary);
+  }
+
+  & .logo {
     height: 35px;
     margin-right: 20px;
     vertical-align: middle;
+  }
+
+  & .user-menu {
+    float: right;
+    line-height: 60px;
+    cursor: pointer;
   }
 }
 </style>
