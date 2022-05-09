@@ -1,4 +1,6 @@
-function getDbList(req, res) {
+import { MockMethod } from 'vite-plugin-mock'
+
+function getDbList() {
   const dbList = [
     {
       id: 1,
@@ -22,25 +24,30 @@ function getDbList(req, res) {
     },
   ]
 
-  res.json({
-    dbList,
-  })
+  return { dbList }
 }
 
-function saveDb(req, res) {
-  res.json({
-    id: 1,
-  })
+function saveDb() {
+  return { id: 1 }
 }
 
-function deleteDb(req, res) {
-  res.json({
-    id: 1,
-  })
+function deleteDb() {
+  return { id: 1 }
 }
 
-module.exports = {
-  'GET /db/list': getDbList,
-  'POST /db/save': saveDb,
-  'POST /db/delete': deleteDb,
-}
+export default [
+  {
+    url: '/api/db/list',
+    response: getDbList,
+  },
+  {
+    url: '/api/db/save',
+    method: 'post',
+    response: saveDb,
+  },
+  {
+    url: '/api/db/delete',
+    method: 'post',
+    response: deleteDb,
+  },
+] as MockMethod[]
