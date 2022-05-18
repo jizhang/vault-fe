@@ -1,20 +1,13 @@
-<script setup lang="ts">
-import { RouterView } from 'vue-router'
-import 'element-plus/es/components/message/style/css'
-import 'element-plus/es/components/notification/style/css'
-</script>
-
 <template>
-  <RouterView />
+  <div id="app">
+    <router-view></router-view>
+  </div>
 </template>
+<style lang="less">
+  @import './less/site.less';
 
-<style>
-@import '@/assets/base.css';
-
-#app {
-  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
-    '微软雅黑', Arial, sans-serif;
-  font-size: var(--el-font-size-base);
-  color: var(--el-text-color-regular);
-}
+  #app {
+    width: 100%;
+    height: 100%;
+  }
 </style>
