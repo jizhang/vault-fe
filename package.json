@@ -23,7 +23,7 @@
     "basscss": "^8.0.2",
     "chart.js": "^2.5.0",
     "element-ui": "^2.15.8",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.21",
     "moment": "^2.29.2",
     "normalize.css": "^5.0.0",
     "pinia": "^2.0.13",
