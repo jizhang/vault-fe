@@ -48,10 +48,10 @@
 
   export default {
     mounted() {
-      var currentRoute = $router.currentRoute.path
+      const currentRoute = $router.currentRoute.path
 
       let openedMenus, activedIndex;
-      let menuItem = _.find(MENU, (item) => _.includes(currentRoute, item.path))
+      const menuItem = _.find(MENU, (item) => _.includes(currentRoute, item.path))
       if (menuItem) {
         openedMenus = [menuItem.index]
         activedIndex = menuItem.index
@@ -59,7 +59,7 @@
 
       _.forEach(MENU, (menuItem) => {
         if (_.has(menuItem, 'children')) {
-          let childItem = _.find(menuItem.children, (item) => _.includes(currentRoute, item.path))
+          const childItem = _.find(menuItem.children, (item) => _.includes(currentRoute, item.path))
           if (childItem) {
             openedMenus = [menuItem.index]
             activedIndex = childItem.index
@@ -68,7 +68,7 @@
         }
 
         if (_.has(menuItem, 'includes')) {
-          let includeItem = _.find(menuItem.includes, (item) => _.includes(currentRoute, item.path))
+          const includeItem = _.find(menuItem.includes, (item) => _.includes(currentRoute, item.path))
           if (includeItem) {
             openedMenus = [menuItem.index]
             activedIndex = menuItem.index

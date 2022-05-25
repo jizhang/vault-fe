@@ -6,7 +6,7 @@ import { Message } from 'element-ui';
 axios.defaults.baseURL = '/'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
-let api = axios.create({
+const api = axios.create({
   baseURL: '/api',
   timeout: 10 * 1000 // 10 seconds
 })
@@ -25,7 +25,7 @@ api.interceptors.response
     return response;
   }, (err) => {
     // Process error:
-    let res = err.response
+    const res = err.response
 
     if (res.status === 400 || res.status === 403) {
       Message({

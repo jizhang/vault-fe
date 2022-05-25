@@ -1,6 +1,6 @@
 export default {
   formatBytes (bytes) {
-    let negative = bytes < 0
+    const negative = bytes < 0
     bytes = Math.abs(bytes)
     if (bytes >= Math.pow(1024, 4)) {
       bytes = (bytes / Math.pow(1024, 4)).toFixed(1) + 'T'

@@ -14,7 +14,7 @@ export default {
 
   actions: {
     async login({ commit }, payload) {
-      let response = await service.login(payload)
+      const response = await service.login(payload)
       if (response && response.data) {
         commit(types.SAVE, {
           username: response.data.payload.username,

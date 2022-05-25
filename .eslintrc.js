@@ -3,26 +3,24 @@ module.exports = {
     browser: true,
     node: true,
   },
-  parserOptions: {
-    ecmaVersion: 2017,
-  },
   extends: [
-    // add more generic rulesets here, such as:
     'standard',
     'plugin:vue/essential'
   ],
-  rules: {
-    // override/add rules settings here, such as:
-    // 'vue/no-unused-vars': 'error'
-    'indent': 'off',
-    'vue/script-indent': ['error', 2, {'baseIndent': 1}],
-    'comma-dangle': ['error', 'only-multiline'],
-    'import/first': 'off',
-    'space-before-function-paren': 'off',
-    'semi': 'off',
-    'eqeqeq': 'off',
-  },
   globals: {
-    '$router': false,
+    $router: false,
+  },
+  parserOptions: {
+    ecmaVersion: 2017,
+  },
+  rules: {
+    'comma-dangle': ['error', 'only-multiline'],
+    eqeqeq: 'off',
+    'import/first': 'off',
+    indent: 'off',
+    semi: 'off',
+    'space-before-function-paren': 'off',
+    'vue/script-indent': ['error', 2, { baseIndent: 1 }],
+    'vue/multi-word-component-names': 'off',
   }
 }

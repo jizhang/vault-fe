@@ -7,13 +7,13 @@
     "start:local": "cross-env MOCK=none webpack serve --mode=development --progress",
     "build": "cross-env NODE_ENV=production webpack --mode=production --progress",
     "build:ci": "cross-env NODE_ENV=production webpack --mode=production",
-    "lint": "eslint 'src/**/*.{js,vue}' 'mock/**/*.js'",
+    "lint": "eslint . --ext .js,.vue --fix",
+    "lint:ci": "eslint . --ext .js,.vue",
     "analyze": "cross-env NODE_ENV=production ANALYZE=1 webpack --mode=production --progress",
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "src/**/*.{js,vue}": "eslint",
-    "mock/**/*.js": "eslint"
+    "*.{js,vue}": "eslint --fix"
   },
   "dependencies": {
     "@antv/g6": "^2.1.4-beta.3",
@@ -41,13 +41,12 @@
     "clean-webpack-plugin": "^4.0.0",
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.1",
-    "eslint": "^4.19.1",
-    "eslint-config-standard": "^11.0.0",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-node": "^5.2.1",
-    "eslint-plugin-promise": "^3.6.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "eslint-plugin-vue": "^4.5.0",
+    "eslint": "^8.16.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.2.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-vue": "^8.7.1",
     "glob": "^7.0.0",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^0.14.3",
