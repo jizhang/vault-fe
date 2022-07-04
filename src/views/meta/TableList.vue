@@ -1,3 +1,16 @@
+<script lang="ts">
+import { defineComponent } from 'vue'
+import { getMessage } from './helloWorld'
+
+export default defineComponent({
+  data() {
+    return {
+      message: getMessage(),
+    }
+  },
+})
+</script>
+
 <template>
   <transition name="fade">
     <div class="page-metadata-table-list">
@@ -8,23 +21,17 @@
         </el-button-group>
       </div>
       <div class="page-title">元数据管理</div>
+      <div>{{message}}</div>
     </div>
   </transition>
 </template>
+
 <style lang="less">
-  .page-metadata-table-list {
-    .page-title {
-      font-size: 18px;
-      line-height: 18px;
-      margin-bottom: 20px;
-    }
+.page-metadata-table-list {
+  .page-title {
+    font-size: 18px;
+    line-height: 18px;
+    margin-bottom: 20px;
   }
+}
 </style>
-<script>
-  export default {
-    data() {
-      return {
-      }
-    },
-  }
-</script>

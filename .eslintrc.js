@@ -5,22 +5,31 @@ module.exports = {
   },
   extends: [
     'standard',
-    'plugin:vue/essential'
+    'plugin:vue/essential',
+    'plugin:@typescript-eslint/recommended',
   ],
   globals: {
     $router: false,
   },
+  overrides: [
+    {
+      files: '*.js',
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
+      },
+    },
+  ],
+  parser: 'vue-eslint-parser',
   parserOptions: {
-    ecmaVersion: 2017,
+    parser: '@typescript-eslint/parser',
   },
   rules: {
-    'comma-dangle': ['error', 'only-multiline'],
     eqeqeq: 'off',
-    'import/first': 'off',
     indent: 'off',
     semi: 'off',
+    'comma-dangle': ['error', 'only-multiline'],
+    'import/first': 'off',
     'space-before-function-paren': 'off',
-    'vue/script-indent': ['error', 2, { baseIndent: 1 }],
     'vue/multi-word-component-names': 'off',
   }
 }

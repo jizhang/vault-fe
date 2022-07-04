@@ -31,6 +31,11 @@ module.exports = {
         exclude: /node_modules/
       },
       {
+        test: /\.ts$/,
+        loader: 'ts-loader',
+        options: { appendTsSuffixTo: [/\.vue$/] },
+      },
+      {
         test: /\.css$/,
         use: [styleLoader, 'css-loader'],
       },
@@ -49,6 +54,7 @@ module.exports = {
     ],
   },
   resolve: {
+    extensions: ['.js', '.ts'],
     alias: {
       '@': path.resolve('./src'),
     },

@@ -82,7 +82,7 @@
     },
 
     methods: {
-      handleSelect(key, keyPath) {
+      handleSelect(key) {
         let path = ''
 
         _.forEach(MENU, (menuItem) => {
