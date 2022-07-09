@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-
     <Navbar>
       <template slot="content">
         <div class="navbar-content-wrapper">
@@ -16,7 +15,7 @@
                   <span class="username" v-text="username"></span>
                 </template>
                 <el-menu-item index="2-1">
-                  <ion-icon name="person-outline" style="margin: -3px 6px 0 0" />Logout
+                  <i class="el-icon-user" style="margin: -3px 6px 0 0"></i>Logout
                 </el-menu-item>
               </el-submenu>
             </el-menu>

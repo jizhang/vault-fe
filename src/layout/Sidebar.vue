@@ -10,12 +10,13 @@
       @select="handleSelect"
     >
       <el-submenu index="1">
-        <template slot="title"><ion-icon name="file-tray-outline" />元数据管理</template>
+        <template slot="title"><i class="el-icon-receiving menu-icon"></i>元数据管理</template>
         <el-menu-item index="1-1">表数据管理</el-menu-item>
       </el-submenu>
     </el-menu>
   </div>
 </template>
+
 <style lang="less">
   .sidebar {
     position: fixed;
@@ -27,12 +28,16 @@
     .el-menu {
       height: 100%;
       border: none;
-      ion-icon {
-        margin: -3px 6px 0 0;
-      }
+    }
+
+    .menu-icon {
+      color: rgba(255, 255, 255, 0.8);
+      margin: -3px 6px 0 -10px;
+      font-size: 16px;
     }
   }
 </style>
+
 <script>
   import _ from 'lodash'
 

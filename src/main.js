@@ -11,8 +11,6 @@ Vue.use(VueCompositionAPI)
 Vue.use(VueCookie)
 Vue.use(ElementUI)
 
-Vue.config.ignoredElements = ['ion-icon']
-
 import App from './App.vue'
 import router from './router'
 import store from './store-legacy'
