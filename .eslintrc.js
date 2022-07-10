@@ -24,12 +24,9 @@ module.exports = {
     parser: '@typescript-eslint/parser',
   },
   rules: {
-    eqeqeq: 'off',
-    indent: 'off',
-    semi: 'off',
-    'comma-dangle': ['error', 'only-multiline'],
-    'import/first': 'off',
-    'space-before-function-paren': 'off',
+    semi: ['error', 'never'],
+    'comma-dangle': ['error', 'always-multiline'],
+    'space-before-function-paren': ['error', 'never'],
     'vue/multi-word-component-names': 'off',
-  }
+  },
 }

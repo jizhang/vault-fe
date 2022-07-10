@@ -12,26 +12,26 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/login',
-    component: Login
+    component: Login,
   },
   {
     path: '/dashboard',
     component: Dashboard,
     children: [
       { path: 'meta/table/list', component: MetaTableList },
-      { path: '/*', redirect: 'meta/table/list' }
+      { path: '/*', redirect: 'meta/table/list' },
     ],
   },
   {
     path: '*',
-    redirect: '/dashboard'
-  }
+    redirect: '/dashboard',
+  },
 ]
 
 const router = new VueRouter({
   mode: 'history',
   base: Config.prefix,
-  routes
+  routes,
 })
 
 window.$router = router

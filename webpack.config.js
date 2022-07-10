@@ -17,18 +17,18 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: Config.prefix + '/',
-    filename: '[name].dev.js'
+    filename: '[name].dev.js',
   },
   module: {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: 'vue-loader',
       },
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.ts$/,
@@ -68,7 +68,7 @@ module.exports = {
     historyApiFallback: true,
   },
   performance: {
-    hints: false
+    hints: false,
   },
   devtool: 'eval-source-map',
   plugins: [

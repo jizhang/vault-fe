@@ -32,86 +32,87 @@
     </div>
   </div>
 </template>
-<style lang="less">
-  @import "../less/variables";
-  @import "../less/mixins";
 
-  .container {
+<style lang="less">
+@import "../less/variables";
+@import "../less/mixins";
+
+.container {
+  .flexbox();
+  .flex(1);
+
+  .navbar-content-wrapper {
+    background: @extra-light-gray;
     .flexbox();
     .flex(1);
 
-    .navbar-content-wrapper {
-      background: @extra-light-gray;
-      .flexbox();
+    .navbar-content {
       .flex(1);
-
-      .navbar-content {
-        .flex(1);
-        padding: 15px 20px;
-      }
-
-      .user-actions {
-        .el-menu {
-          min-width: 150px;
-          border: none;
-          background-color: transparent;
-        }
-      }
+      padding: 15px 20px;
     }
 
-    .dashboard {
-      padding: 60px 0 0 200px;
-      width: 100%;
-      height: auto;
-
-      .page-container {
-        padding: 20px;
+    .user-actions {
+      .el-menu {
+        min-width: 150px;
+        border: none;
+        background-color: transparent;
       }
     }
   }
+
+  .dashboard {
+    padding: 60px 0 0 200px;
+    width: 100%;
+    height: auto;
+
+    .page-container {
+      padding: 20px;
+    }
+  }
+}
 </style>
+
 <script>
-  import Navbar from './Navbar.vue'
-  import Sidebar from './Sidebar.vue'
-  import api from '../common/api'
+import Navbar from './Navbar.vue'
+import Sidebar from './Sidebar.vue'
+import api from '../common/api'
 
-  export default {
-    components: {
-      Navbar,
-      Sidebar
-    },
+export default {
+  components: {
+    Navbar,
+    Sidebar,
+  },
 
-    data() {
-      return {
-        username: this.$cookie.get('vault_username')
-      }
-    },
-    mounted() {
-      if (this.$cookie.get('vault_username')) {
-        console.log('已登录');
-      } else {
-        console.log('未登录');
-        $router.replace({ path: '/login' })
-      }
-    },
-    methods: {
-      userActionSelect(key, keyPath) {
-        console.log(key, keyPath)
-
-        if (key === '2-1') { // logout
-          api.post('/logout').then(() => {
-            this.$message({
-              message: '已登出',
-              type: 'warning'
-            })
-
-            this.$cookie.delete('vault_username')
-
-            $router.replace({ path: '/login' })
-          })
-        }
-      }
+  data() {
+    return {
+      username: this.$cookie.get('vault_username'),
     }
-  }
+  },
+  mounted() {
+    if (this.$cookie.get('vault_username')) {
+      console.log('已登录')
+    } else {
+      console.log('未登录')
+      $router.replace({ path: '/login' })
+    }
+  },
+  methods: {
+    userActionSelect(key, keyPath) {
+      console.log(key, keyPath)
 
+      if (key === '2-1') { // logout
+        api.post('/logout').then(() => {
+          this.$message({
+            message: '已登出',
+            type: 'warning',
+          })
+
+          this.$cookie.delete('vault_username')
+
+          $router.replace({ path: '/login' })
+        })
+      }
+    },
+  },
+}
 </script>

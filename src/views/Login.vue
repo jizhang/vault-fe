@@ -15,37 +15,37 @@
 </template>
 
 <script>
-  import api from '../common/api'
+import api from '../common/api'
 
-  export default {
-    data() {
-      return {
-        login: {
-          username: '',
-          password: '',
-        },
-        loading: false,
-      }
-    },
-
-    methods: {
-      signIn() {
-        this.loading = true
-        api.post('/login', this.login).then(() => {
-          this.loading = false
-
-          this.$message({
-            message: '登录成功！',
-            type: 'success'
-          })
-
-          this.$cookie.set('vault_username', this.login.username, 365)
-
-          $router.push({
-            path: '/dashboard'
-          })
-        }).catch(() => { this.loading = false })
+export default {
+  data() {
+    return {
+      login: {
+        username: '',
+        password: '',
       },
+      loading: false,
+    }
+  },
+
+  methods: {
+    signIn() {
+      this.loading = true
+      api.post('/login', this.login).then(() => {
+        this.loading = false
+
+        this.$message({
+          message: '登录成功！',
+          type: 'success',
+        })
+
+        this.$cookie.set('vault_username', this.login.username, 365)
+
+        $router.push({
+          path: '/dashboard',
+        })
+      }).catch(() => { this.loading = false })
     },
-  }
+  },
+}
 </script>

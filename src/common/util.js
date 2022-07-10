@@ -1,5 +1,5 @@
 export default {
-  formatBytes (bytes) {
+  formatBytes(bytes) {
     const negative = bytes < 0
     bytes = Math.abs(bytes)
     if (bytes >= Math.pow(1024, 4)) {
@@ -14,5 +14,5 @@ export default {
       bytes = Number(bytes).toFixed(1) + 'B'
     }
     return (negative ? '-' : '') + bytes
-  }
+  },
 }
