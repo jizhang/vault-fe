@@ -3,7 +3,6 @@
     <Navbar>
       <template slot="content">
         <div class="navbar-content-wrapper">
-
           <div class="navbar-content">
             <!-- 头部导航内容 -->
           </div>
@@ -34,8 +33,8 @@
 </template>
 
 <style lang="less">
-@import "../less/variables";
-@import "../less/mixins";
+@import '../less/variables';
+@import '../less/mixins';
 
 .container {
   .flexbox();
@@ -100,7 +99,8 @@ export default {
     userActionSelect(key, keyPath) {
       console.log(key, keyPath)
 
-      if (key === '2-1') { // logout
+      if (key === '2-1') {
+        // logout
         api.post('/logout').then(() => {
           this.$message({
             message: '已登出',

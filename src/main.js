@@ -18,7 +18,7 @@ import store from './store-legacy'
 import pinia from './stores'
 
 new Vue({
-  render: h => h(App),
+  render: (h) => h(App),
   router,
   store,
   pinia,

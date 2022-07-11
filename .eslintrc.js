@@ -7,6 +7,7 @@ module.exports = {
     'standard',
     'plugin:vue/essential',
     'plugin:@typescript-eslint/recommended',
+    'prettier',
   ],
   globals: {
     $router: false,
@@ -24,9 +25,6 @@ module.exports = {
     parser: '@typescript-eslint/parser',
   },
   rules: {
-    semi: ['error', 'never'],
-    'comma-dangle': ['error', 'always-multiline'],
-    'space-before-function-paren': ['error', 'never'],
     'vue/multi-word-component-names': 'off',
   },
 }

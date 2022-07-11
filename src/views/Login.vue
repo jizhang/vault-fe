@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 500px; margin: 100px auto auto auto; padding-right: 120px;">
+  <div style="width: 500px; margin: 100px auto auto auto; padding-right: 120px">
     <el-form :model="login" label-width="120px">
       <el-form-item label="用户名">
         <el-input v-model="login.username"></el-input>
@@ -31,20 +31,25 @@ export default {
   methods: {
     signIn() {
       this.loading = true
-      api.post('/login', this.login).then(() => {
-        this.loading = false
+      api
+        .post('/login', this.login)
+        .then(() => {
+          this.loading = false
 
-        this.$message({
-          message: '登录成功！',
-          type: 'success',
+          this.$message({
+            message: '登录成功！',
+            type: 'success',
+          })
+
+          this.$cookie.set('vault_username', this.login.username, 365)
+
+          $router.push({
+            path: '/dashboard',
+          })
         })
-
-        this.$cookie.set('vault_username', this.login.username, 365)
-
-        $router.push({
-          path: '/dashboard',
+        .catch(() => {
+          this.loading = false
         })
-      }).catch(() => { this.loading = false })
     },
   },
 }

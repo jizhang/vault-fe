@@ -63,7 +63,16 @@
   justify-content: space-between;
 }
 
-.justify-content(@jc) when not (@jc = flex-start) and not (@jc = flex-end) and not (@jc = space-between) {
+.justify-content(@jc)
+  when
+  not
+  (@jc = flex-start)
+  and
+  not
+  (@jc = flex-end)
+  and
+  not
+  (@jc = space-between) {
   -webkit-box-pack: @jc;
   -ms-flex-pack: @jc;
   -webkit-justify-content: @jc;
@@ -120,8 +129,8 @@
 }
 
 .flex-direction(@d) {
-  -webkit-flex-direction:@d;
-  -moz-flex-direction:@d;
-  -ms-flex-direction:@d;
-  flex-direction:@d;
+  -webkit-flex-direction: @d;
+  -moz-flex-direction: @d;
+  -ms-flex-direction: @d;
+  flex-direction: @d;
 }

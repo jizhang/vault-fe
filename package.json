@@ -7,13 +7,14 @@
     "start:local": "cross-env MOCK=none webpack serve --mode=development --progress",
     "build": "cross-env NODE_ENV=production webpack --mode=production --progress",
     "build:ci": "cross-env NODE_ENV=production webpack --mode=production",
-    "lint": "eslint . --ext .vue,.ts,.js --fix",
-    "lint:ci": "eslint . --ext .vue,.ts,.js",
+    "lint": "eslint --ext .vue,.js --fix . && prettier --write .",
+    "lint:ci": "eslint --ext .vue,.js . && prettier --check .",
     "analyze": "cross-env NODE_ENV=production ANALYZE=1 webpack --mode=production --progress",
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{vue,ts,js}": "eslint --fix"
+    "*": "prettier --write --ignore-unknown",
+    "*.{vue,js}": "eslint --fix"
   },
   "dependencies": {
     "@antv/g6": "^2.1.4-beta.3",
@@ -44,6 +45,7 @@
     "cross-env": "^7.0.3",
     "css-loader": "^6.7.1",
     "eslint": "^8.16.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.2.0",
@@ -57,6 +59,7 @@
     "lint-staged": "^12.4.2",
     "mini-css-extract-plugin": "^2.6.0",
     "mocker-api": "^2.9.5",
+    "prettier": "^2.7.1",
     "ts-loader": "^9.3.1",
     "typescript": "^4.7.4",
     "vue-loader": "^15.10.0",

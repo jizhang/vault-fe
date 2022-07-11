@@ -8,9 +8,8 @@ const apiMocker = require('mocker-api')
 const glob = require('glob')
 const Config = require('./src/common/config.js')
 
-const styleLoader = process.env.NODE_ENV === 'production'
-  ? MiniCssExtractPlugin.loader
-  : 'vue-style-loader'
+const styleLoader =
+  process.env.NODE_ENV === 'production' ? MiniCssExtractPlugin.loader : 'vue-style-loader'
 
 module.exports = {
   entry: './src/main.js',

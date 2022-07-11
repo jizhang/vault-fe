@@ -45,9 +45,7 @@ const MENU = [
   {
     index: '1',
     path: '/meta/',
-    children: [
-      { index: '1-1', path: '/meta/table/list' },
-    ],
+    children: [{ index: '1-1', path: '/meta/table/list' }],
   },
 ]
 

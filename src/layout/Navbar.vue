@@ -11,8 +11,8 @@
 </template>
 
 <style lang="less">
-@import "../less/variables";
-@import "../less/mixins";
+@import '../less/variables';
+@import '../less/mixins';
 
 .navbar {
   .flexbox();
