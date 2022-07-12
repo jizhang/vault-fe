@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Dashboard from './layout/Dashboard.vue'
 import Login from './views/Login.vue'
 import MetaTableList from './views/meta/TableList.vue'
+import MetaDbList from './views/meta/DbList.vue'
 
 import Config from './common/config.js'
 
@@ -19,6 +20,7 @@ const routes = [
     component: Dashboard,
     children: [
       { path: 'meta/table/list', component: MetaTableList },
+      { path: 'meta/db/list', component: MetaDbList },
       { path: '/*', redirect: 'meta/table/list' },
     ],
   },

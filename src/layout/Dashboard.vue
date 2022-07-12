@@ -14,7 +14,8 @@
                   <span class="username" v-text="username"></span>
                 </template>
                 <el-menu-item index="2-1">
-                  <i class="el-icon-user" style="margin: -3px 6px 0 0"></i>Logout
+                  <i class="el-icon-user" style="margin: -3px 6px 0 0"></i>
+                  Logout
                 </el-menu-item>
               </el-submenu>
             </el-menu>

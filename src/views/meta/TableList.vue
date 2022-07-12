@@ -1,14 +1,9 @@
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script setup lang="ts">
+import { ref } from 'vue'
+import router from '@/router'
 import { getMessage } from './helloWorld'
 
-export default defineComponent({
-  data() {
-    return {
-      message: getMessage(),
-    }
-  },
-})
+const message = ref(getMessage())
 </script>
 
 <template>
@@ -20,16 +15,18 @@ export default defineComponent({
             type="success"
             size="small"
             icon="el-icon-plus"
-            @click="$router.push({ path: '/dashboard/meta/table/edit' })"
-            >新建表</el-button
+            @click="router.push({ path: '/dashboard/meta/table/edit' })"
           >
+            新建表
+          </el-button>
           <el-button
             type="success"
             size="small"
             icon="el-icon-setting"
-            @click="$router.push({ path: '/dashboard/meta/db/list' })"
-            >管理数据库</el-button
+            @click="router.push({ path: '/dashboard/meta/db/list' })"
           >
+            管理数据库
+          </el-button>
         </el-button-group>
       </div>
       <div class="page-title">元数据管理</div>
