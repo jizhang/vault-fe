@@ -4,6 +4,12 @@ import router from '@/router'
 import { getMessage } from './helloWorld'
 
 const message = ref(getMessage())
+const tableList = ref([
+  {
+    id: 1,
+    db_alias: 'dw_stage',
+  },
+])
 </script>
 
 <template>
@@ -31,6 +37,11 @@ const message = ref(getMessage())
       </div>
       <div class="page-title">元数据管理</div>
       <div>{{ message }}</div>
+
+      <el-table :data="tableList">
+        <el-table-column prop="id" label="ID"></el-table-column>
+        <el-table-column prop="db_alias" label="Database"></el-table-column>
+      </el-table>
     </div>
   </transition>
 </template>
