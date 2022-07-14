@@ -12,7 +12,7 @@
       <el-submenu index="1">
         <template slot="title">
           <i class="el-icon-receiving menu-icon"></i>
-          元数据管理
+          {{ $t('message.metadata') }}
         </template>
         <el-menu-item index="1-1">表数据管理</el-menu-item>
       </el-submenu>
