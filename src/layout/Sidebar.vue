@@ -12,9 +12,16 @@
       <el-submenu index="1">
         <template slot="title">
           <i class="el-icon-receiving menu-icon"></i>
-          {{ $t('message.metadata') }}
+          {{ $t('menu.metadata') }}
         </template>
-        <el-menu-item index="1-1">表数据管理</el-menu-item>
+        <el-menu-item index="1-1">{{ $t('menu.metadataTableList') }}</el-menu-item>
+      </el-submenu>
+      <el-submenu index="4">
+        <template slot="title">
+          <i class="el-icon-connection menu-icon"></i>
+          {{ $t('menu.transfer') }}
+        </template>
+        <el-menu-item index="4-1">{{ $t('menu.transferSchemaList') }}</el-menu-item>
       </el-submenu>
     </el-menu>
   </div>
@@ -35,7 +42,7 @@
 
   .menu-icon {
     color: rgba(255, 255, 255, 0.8);
-    margin: -3px 6px 0 -10px;
+    margin: -3px 2px 0 -10px;
     font-size: 16px;
   }
 }
@@ -49,6 +56,11 @@ const MENU = [
     index: '1',
     path: '/meta/',
     children: [{ index: '1-1', path: '/meta/table/list' }],
+  },
+  {
+    index: '4',
+    path: '/transfer/',
+    children: [{ index: '4-1', path: '/transfer/schema/list' }],
   },
 ]
 

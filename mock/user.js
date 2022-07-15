@@ -2,7 +2,7 @@ function login(req, res) {
   res.json({
     payload: {
       id: 1,
-      username: '张三',
+      username: 'Jerry',
     },
   })
 }
@@ -10,8 +10,8 @@ function login(req, res) {
 function getUserList(req, res) {
   res.json({
     payload: [
-      { id: 1, username: '张三', is_current: 1 },
-      { id: 2, username: '李四', is_current: 0 },
+      { id: 1, username: 'Jerry', is_current: 1 },
+      { id: 2, username: 'Ope', is_current: 0 },
     ],
   })
 }

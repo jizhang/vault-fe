@@ -13,9 +13,13 @@
                 <template slot="title">
                   <span class="username" v-text="username"></span>
                 </template>
+                <el-menu-item index="2-2">
+                  <i class="el-icon-collection user-actions-icon"></i>
+                  {{ $t('changeLocale') }}
+                </el-menu-item>
                 <el-menu-item index="2-1">
-                  <i class="el-icon-user" style="margin: -3px 6px 0 0"></i>
-                  Logout
+                  <i class="el-icon-user user-actions-icon"></i>
+                  {{ $t('logout') }}
                 </el-menu-item>
               </el-submenu>
             </el-menu>
@@ -70,6 +74,11 @@
     }
   }
 }
+
+.user-actions-icon {
+  font-size: 16px !important;
+  margin: -3px 2px 0 0 !important;
+}
 </style>
 
 <script>
@@ -88,18 +97,20 @@ export default {
       username: this.$cookie.get('vault_username'),
     }
   },
+
   mounted() {
-    if (this.$cookie.get('vault_username')) {
-      console.log('已登录')
-    } else {
-      console.log('未登录')
+    if (!this.$cookie.get('vault_username')) {
       $router.replace({ path: '/login' })
     }
-  },
-  methods: {
-    userActionSelect(key, keyPath) {
-      console.log(key, keyPath)
 
+    const locale = this.$cookie.get('vault_locale')
+    if (locale) {
+      this.$i18n.locale = locale
+    }
+  },
+
+  methods: {
+    userActionSelect(key) {
       if (key === '2-1') {
         // logout
         api.post('/logout').then(() => {
@@ -112,6 +123,10 @@ export default {
 
           $router.replace({ path: '/login' })
         })
+      } else if (key === '2-2') {
+        const locale = this.$i18n.locale === 'en' ? 'zh' : 'en'
+        this.$i18n.locale = locale
+        this.$cookie.set('vault_locale', locale, 365)
       }
     },
   },
