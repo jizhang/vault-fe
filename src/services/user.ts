@@ -1,6 +1,6 @@
 import api from '@/common/api'
 
-export async function login(data) {
+export async function login(data: object) {
   return api.post('/login', data)
 }
 

@@ -12,14 +12,12 @@ Vue.use(ElementUI)
 
 import App from './App.vue'
 import router from './router'
-import store from './store-legacy'
 import pinia from './stores'
 import i18n from './i18n'
 
 new Vue({
   render: (h) => h(App),
   router,
-  store,
   pinia,
   i18n,
 }).$mount('#app')

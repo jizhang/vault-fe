@@ -1,6 +1,12 @@
 export default {
-  changeLocale: '中文',
-  logout: 'Logout',
+  userActions: {
+    loginSuccess: 'Welcome, {username}!',
+    username: 'Username',
+    password: 'Password',
+    login: 'Login',
+    logout: 'Logout',
+    changeLocale: '中文',
+  },
   menu: {
     metadata: 'Metadata',
     metadataTableList: 'Tables',

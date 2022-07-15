@@ -15,11 +15,11 @@
                 </template>
                 <el-menu-item index="2-2">
                   <i class="el-icon-collection user-actions-icon"></i>
-                  {{ $t('changeLocale') }}
+                  {{ $t('userActions.changeLocale') }}
                 </el-menu-item>
                 <el-menu-item index="2-1">
                   <i class="el-icon-user user-actions-icon"></i>
-                  {{ $t('logout') }}
+                  {{ $t('userActions.logout') }}
                 </el-menu-item>
               </el-submenu>
             </el-menu>
@@ -101,11 +101,6 @@ export default {
   mounted() {
     if (!this.$cookie.get('vault_username')) {
       $router.replace({ path: '/login' })
-    }
-
-    const locale = this.$cookie.get('vault_locale')
-    if (locale) {
-      this.$i18n.locale = locale
     }
   },
 

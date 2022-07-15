@@ -5,6 +5,9 @@ function login(req, res) {
       username: 'Jerry',
     },
   })
+  // res.status(400).json({
+  //   message: 'Invalid username or password.',
+  // })
 }
 
 function getUserList(req, res) {

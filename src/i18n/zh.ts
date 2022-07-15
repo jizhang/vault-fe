@@ -1,6 +1,12 @@
 export default {
-  changeLocale: 'English',
-  logout: '退出登录',
+  userActions: {
+    loginSuccess: '{username} 登录成功！',
+    username: '用户名',
+    password: '密码',
+    login: '登录',
+    logout: '退出登录',
+    changeLocale: 'English',
+  },
   menu: {
     metadata: '元数据管理',
     metadataTableList: '表数据管理',
