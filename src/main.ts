@@ -10,10 +10,10 @@ import 'element-ui/lib/theme-chalk/index.css'
 Vue.use(VueCookie)
 Vue.use(ElementUI)
 
-import App from './App.vue'
-import router from './router'
-import pinia from './stores'
 import i18n from './i18n'
+import pinia from './stores'
+import router from './router'
+import App from './App.vue'
 
 new Vue({
   render: (h) => h(App),

@@ -6,6 +6,7 @@ export default {
     login: '登录',
     logout: '退出登录',
     changeLocale: 'English',
+    badRequest: '错误的请求',
   },
   menu: {
     metadata: '元数据管理',

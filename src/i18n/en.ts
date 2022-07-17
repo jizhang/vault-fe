@@ -6,6 +6,7 @@ export default {
     login: 'Login',
     logout: 'Logout',
     changeLocale: '中文',
+    badRequest: 'Bad request',
   },
   menu: {
     metadata: 'Metadata',

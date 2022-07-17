@@ -1,7 +1,8 @@
 import axios from 'axios'
-import qs from 'qs'
-
+import { stringify } from 'qs'
 import { Message } from 'element-ui'
+import i18n from '@/i18n'
+import router from '@/router'
 
 axios.defaults.baseURL = '/'
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
@@ -12,8 +13,8 @@ const api = axios.create({
 })
 
 api.interceptors.request.use((config) => {
-  if (config.method.toLowerCase() === 'post' && config.data) {
-    config.data = qs.stringify(config.data)
+  if (config.method?.toLowerCase() === 'post' && config.data) {
+    config.data = stringify(config.data)
   }
   return config
 })
@@ -29,10 +30,10 @@ api.interceptors.response.use(
 
     if (res.status === 400 || res.status === 403) {
       Message({
-        message: (res.data && res.data.message) || '错误的请求',
+        message: (res.data && res.data.message) || i18n.t('userActions.badRequest'),
       })
     } else if (res.status === 401) {
-      $router.push({
+      router.push({
         path: '/login',
       })
     } else {

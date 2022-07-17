@@ -4,13 +4,13 @@
   "private": true,
   "scripts": {
     "start": "webpack serve --mode=development --progress",
-    "start:local": "cross-env MOCK=none webpack serve --mode=development --progress",
-    "build": "cross-env NODE_ENV=production webpack --mode=production --progress",
-    "build:ci": "cross-env NODE_ENV=production webpack --mode=production",
+    "start:local": "webpack serve --mode=development --progress --env mock=none",
+    "build": "webpack --mode=production --progress",
+    "build:ci": "webpack --mode=production",
+    "analyze": "webpack --mode=production --progress --env analyze",
     "lint": "eslint --ext .vue,.ts,.js --fix . && prettier --write . && npm run checktype",
     "lint:ci": "eslint --ext .vue,.ts,.js . && prettier --check . && npm run checktype",
     "checktype": "vue-tsc --noEmit",
-    "analyze": "cross-env NODE_ENV=production ANALYZE=1 webpack --mode=production --progress",
     "prepare": "husky install"
   },
   "lint-staged": {
@@ -43,7 +43,6 @@
     "@typescript-eslint/parser": "^5.30.4",
     "babel-loader": "^8.2.4",
     "clean-webpack-plugin": "^4.0.0",
-    "cross-env": "^7.0.3",
     "css-loader": "^6.7.1",
     "eslint": "^8.16.0",
     "eslint-config-prettier": "^8.5.0",

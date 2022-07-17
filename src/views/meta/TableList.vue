@@ -11,6 +11,10 @@ const tableList = ref([
     db_alias: 'dw_stage',
   },
 ])
+
+function createTable() {
+  console.log('Create table.')
+}
 </script>
 
 <template>
@@ -18,12 +22,7 @@ const tableList = ref([
     <div class="page-metadata-table-list">
       <div style="float: right">
         <el-button-group>
-          <el-button
-            type="success"
-            size="small"
-            icon="el-icon-plus"
-            @click="router.push({ path: '/dashboard/meta/table/edit' })"
-          >
+          <el-button type="success" size="small" icon="el-icon-plus" @click="createTable">
             {{ t('metadata.tableList.newTable') }}
           </el-button>
           <el-button

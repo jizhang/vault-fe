@@ -9,9 +9,6 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'prettier',
   ],
-  globals: {
-    $router: false,
-  },
   overrides: [
     {
       files: '*.js',

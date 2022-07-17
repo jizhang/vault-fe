@@ -7,8 +7,6 @@ import MetaTableList from './views/meta/TableList.vue'
 import MetaDbList from './views/meta/DbList.vue'
 import TransferSchemaList from './views/transfer/SchemaList.vue'
 
-import Config from './common/config.js'
-
 Vue.use(VueRouter)
 
 const routes = [
@@ -34,10 +32,7 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  base: Config.prefix,
   routes,
 })
-
-window.$router = router
 
 export default router

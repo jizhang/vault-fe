@@ -50,6 +50,7 @@
 
 <script>
 import _ from 'lodash'
+import router from '@/router'
 
 const MENU = [
   {
@@ -66,7 +67,7 @@ const MENU = [
 
 export default {
   mounted() {
-    const currentRoute = $router.currentRoute.path
+    const currentRoute = router.currentRoute.path
 
     let openedMenus, activedIndex
     const menuItem = _.find(MENU, (item) => _.includes(currentRoute, item.path))
@@ -121,7 +122,7 @@ export default {
         }
       })
 
-      $router.push({
+      router.push({
         path: '/dashboard' + path,
       })
     },

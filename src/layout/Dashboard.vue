@@ -84,7 +84,8 @@
 <script>
 import Navbar from './Navbar.vue'
 import Sidebar from './Sidebar.vue'
-import api from '../common/api'
+import api from '@/common/api'
+import router from '@/router'
 
 export default {
   components: {
@@ -100,7 +101,7 @@ export default {
 
   mounted() {
     if (!this.$cookie.get('vault_username')) {
-      $router.replace({ path: '/login' })
+      router.replace({ path: '/login' })
     }
   },
 
@@ -116,7 +117,7 @@ export default {
 
           this.$cookie.delete('vault_username')
 
-          $router.replace({ path: '/login' })
+          router.replace({ path: '/login' })
         })
       } else if (key === '2-2') {
         const locale = this.$i18n.locale === 'en' ? 'zh' : 'en'
