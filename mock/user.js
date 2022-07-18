@@ -10,6 +10,10 @@ function login(req, res) {
   // })
 }
 
+function logout(req, res) {
+  res.json({})
+}
+
 function getUserList(req, res) {
   res.json({
     payload: [
@@ -21,5 +25,6 @@ function getUserList(req, res) {
 
 module.exports = {
   'POST /api/login': login,
+  'POST /api/logout': logout,
   'GET /api/user/list': getUserList,
 }

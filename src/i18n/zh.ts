@@ -1,6 +1,7 @@
 export default {
   userActions: {
     loginSuccess: '{username} 登录成功！',
+    logoutSuccess: '已登出',
     username: '用户名',
     password: '密码',
     login: '登录',

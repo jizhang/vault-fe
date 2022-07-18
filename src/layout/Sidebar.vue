@@ -1,27 +1,58 @@
+<script setup lang="ts">
+import * as _ from 'lodash'
+import { onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n-composable'
+import { useRouter } from '@/common/utils'
+
+const router = useRouter()
+const { t } = useI18n()
+
+const defaultMenu = ref('')
+
+const menuIncludes = {
+  '/dashboard/meta/table/list': ['/dashboard/meta/table/', '/dashboard/meta/db/'],
+}
+
+onMounted(() => {
+  const currentPath = router.currentRoute.path
+
+  const menuOpt = _(menuIncludes)
+    .flatMap((prefixes, menu) => _.map(prefixes, (prefix) => [prefix, menu]))
+    .filter((t) => _.startsWith(currentPath, t[0]))
+    .map(1)
+    .first()
+
+  defaultMenu.value = _.defaultTo(menuOpt, currentPath)
+})
+</script>
+
 <template>
   <div class="sidebar">
     <el-menu
-      ref="menu"
-      default-active="1"
+      :default-active="defaultMenu"
       background-color="#545c64"
       text-color="#fff"
       active-text-color="#ffd04b"
-      unique-opened
-      @select="handleSelect"
+      :unique-opened="true"
+      :router="true"
     >
-      <el-submenu index="1">
+      <el-submenu index="/dashboard/meta/">
         <template slot="title">
           <i class="el-icon-receiving menu-icon"></i>
-          {{ $t('menu.metadata') }}
+          {{ t('menu.metadata') }}
         </template>
-        <el-menu-item index="1-1">{{ $t('menu.metadataTableList') }}</el-menu-item>
+        <el-menu-item index="/dashboard/meta/table/list">
+          {{ t('menu.metadataTableList') }}
+        </el-menu-item>
       </el-submenu>
-      <el-submenu index="4">
+      <el-submenu index="/dashboard/transfer/">
         <template slot="title">
           <i class="el-icon-connection menu-icon"></i>
-          {{ $t('menu.transfer') }}
+          {{ t('menu.transfer') }}
         </template>
-        <el-menu-item index="4-1">{{ $t('menu.transferSchemaList') }}</el-menu-item>
+        <el-menu-item index="/dashboard/transfer/schema/list">
+          {{ t('menu.transferSchemaList') }}
+        </el-menu-item>
       </el-submenu>
     </el-menu>
   </div>
@@ -35,6 +66,7 @@
   width: 200px;
   height: 100%;
   padding-top: 60px;
+
   .el-menu {
     height: 100%;
     border: none;
@@ -47,85 +79,3 @@
   }
 }
 </style>
-
-<script>
-import _ from 'lodash'
-import router from '@/router'
-
-const MENU = [
-  {
-    index: '1',
-    path: '/meta/',
-    children: [{ index: '1-1', path: '/meta/table/list' }],
-  },
-  {
-    index: '4',
-    path: '/transfer/',
-    children: [{ index: '4-1', path: '/transfer/schema/list' }],
-  },
-]
-
-export default {
-  mounted() {
-    const currentRoute = router.currentRoute.path
-
-    let openedMenus, activedIndex
-    const menuItem = _.find(MENU, (item) => _.includes(currentRoute, item.path))
-    if (menuItem) {
-      openedMenus = [menuItem.index]
-      activedIndex = menuItem.index
-    }
-
-    _.forEach(MENU, (menuItem) => {
-      if (_.has(menuItem, 'children')) {
-        const childItem = _.find(menuItem.children, (item) => _.includes(currentRoute, item.path))
-        if (childItem) {
-          openedMenus = [menuItem.index]
-          activedIndex = childItem.index
-          return false
-        }
-      }
-
-      if (_.has(menuItem, 'includes')) {
-        const includeItem = _.find(menuItem.includes, (item) => _.includes(currentRoute, item.path))
-        if (includeItem) {
-          openedMenus = [menuItem.index]
-          activedIndex = menuItem.index
-          return false
-        }
-      }
-    })
-
-    this.$refs.menu.openedMenus = openedMenus
-    this.$refs.menu.activedIndex = activedIndex
-  },
-
-  methods: {
-    handleSelect(key) {
-      let path = ''
-
-      _.forEach(MENU, (menuItem) => {
-        if (menuItem.index === key) {
-          path = menuItem.path
-          return false
-        }
-
-        _.forEach(_.get(menuItem, 'children', []), (childItem) => {
-          if (childItem.index === key) {
-            path = childItem.path
-            return false
-          }
-        })
-
-        if (path) {
-          return false
-        }
-      })
-
-      router.push({
-        path: '/dashboard' + path,
-      })
-    },
-  },
-}
-</script>

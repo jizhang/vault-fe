@@ -1,3 +1,43 @@
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n-composable'
+import { Message } from 'element-ui'
+import { useCookie, useRouter } from '@/common/utils'
+import useStore from '@/stores/user'
+import Navbar from './Navbar.vue'
+import Sidebar from './Sidebar.vue'
+
+const cookie = useCookie()
+const router = useRouter()
+const store = useStore()
+const i18n = useI18n()
+const { t } = i18n
+
+const username = ref('')
+
+onMounted(() => {
+  username.value = cookie.get('vault_username') || ''
+  if (!username.value) {
+    router.push({ path: '/login' })
+  }
+})
+
+function userActionSelect(key: string) {
+  if (key === '2-1') {
+    // logout
+    store.logout().then(() => {
+      Message.warning(t('userActions.logoutSuccess') as string)
+      cookie.delete('vault_username')
+      router.push({ path: '/login' })
+    })
+  } else if (key === '2-2') {
+    const locale = i18n.locale.value === 'en' ? 'zh' : 'en'
+    i18n.locale.value = locale
+    cookie.set('vault_locale', locale, 365)
+  }
+}
+</script>
+
 <template>
   <div class="container">
     <Navbar>
@@ -15,11 +55,11 @@
                 </template>
                 <el-menu-item index="2-2">
                   <i class="el-icon-collection user-actions-icon"></i>
-                  {{ $t('userActions.changeLocale') }}
+                  {{ t('userActions.changeLocale') }}
                 </el-menu-item>
                 <el-menu-item index="2-1">
                   <i class="el-icon-user user-actions-icon"></i>
-                  {{ $t('userActions.logout') }}
+                  {{ t('userActions.logout') }}
                 </el-menu-item>
               </el-submenu>
             </el-menu>
@@ -80,51 +120,3 @@
   margin: -3px 2px 0 0 !important;
 }
 </style>
-
-<script>
-import Navbar from './Navbar.vue'
-import Sidebar from './Sidebar.vue'
-import api from '@/common/api'
-import router from '@/router'
-
-export default {
-  components: {
-    Navbar,
-    Sidebar,
-  },
-
-  data() {
-    return {
-      username: this.$cookie.get('vault_username'),
-    }
-  },
-
-  mounted() {
-    if (!this.$cookie.get('vault_username')) {
-      router.replace({ path: '/login' })
-    }
-  },
-
-  methods: {
-    userActionSelect(key) {
-      if (key === '2-1') {
-        // logout
-        api.post('/logout').then(() => {
-          this.$message({
-            message: '已登出',
-            type: 'warning',
-          })
-
-          this.$cookie.delete('vault_username')
-
-          router.replace({ path: '/login' })
-        })
-      } else if (key === '2-2') {
-        const locale = this.$i18n.locale === 'en' ? 'zh' : 'en'
-        this.$i18n.locale = locale
-        this.$cookie.set('vault_locale', locale, 365)
-      }
-    },
-  },
-}
-</script>

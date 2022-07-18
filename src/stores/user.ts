@@ -11,5 +11,10 @@ export default defineStore('user', {
       const response = await service.login(data)
       this.username = response.data.payload.username
     },
+
+    async logout() {
+      await service.logout()
+      this.username = ''
+    },
   },
 })

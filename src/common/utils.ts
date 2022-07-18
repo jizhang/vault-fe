@@ -1,4 +1,5 @@
 import Vue, { getCurrentInstance } from 'vue'
+import type VueRouter from 'vue-router'
 
 function getVm() {
   const instance = getCurrentInstance()
@@ -7,8 +8,7 @@ function getVm() {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const useCookie = () => (getVm() as any).$cookie
-export const useRouter = () => getVm().$router
-export const useRoute = () => getVm().$route
+export const useRouter = (): VueRouter => getVm().$router
 
 export function formatBytes(bytes: number) {
   const negative = bytes < 0

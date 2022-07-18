@@ -1,6 +1,7 @@
 export default {
   userActions: {
     loginSuccess: 'Welcome, {username}!',
+    logoutSuccess: 'Logged out.',
     username: 'Username',
     password: 'Password',
     login: 'Login',
