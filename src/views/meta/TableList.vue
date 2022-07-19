@@ -29,7 +29,7 @@ function createTable() {
             type="success"
             size="small"
             icon="el-icon-setting"
-            @click="router.push({ path: '/dashboard/meta/db/list' })"
+            @click="router.push({ path: '/dashboard/meta/table/db/list' })"
           >
             {{ t('metadata.tableList.manageDatabase') }}
           </el-button>

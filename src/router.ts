@@ -19,9 +19,13 @@ const routes = [
     component: Dashboard,
     children: [
       { path: 'meta/table/list', component: MetaTableList },
-      { path: 'meta/db/list', component: MetaDbList },
+      { path: 'meta/table/db/list', component: MetaDbList },
+      { path: 'meta/table/', redirect: 'meta/table/list' },
+
       { path: 'transfer/schema/list', component: TransferSchemaList },
-      { path: '/*', redirect: 'meta/table/list' },
+      { path: 'transfer/schema/', redirect: 'transfer/schema/list' },
+
+      { path: '/*', redirect: 'meta/table' },
     ],
   },
   {

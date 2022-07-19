@@ -7,19 +7,46 @@ import { useRouter } from '@/common/utils'
 const router = useRouter()
 const { t } = useI18n()
 
-const defaultMenu = ref('')
-
-const menuIncludes = {
-  '/dashboard/meta/table/list': ['/dashboard/meta/table/', '/dashboard/meta/db/'],
+interface MenuItem {
+  name: string
+  path: string
+  icon?: string
+  children?: MenuItem[]
 }
+
+const menuItems: MenuItem[] = [
+  {
+    name: 'menu.metadata',
+    path: '/dashboard/meta/',
+    icon: 'el-icon-receiving',
+    children: [
+      {
+        name: 'menu.metadataTableList',
+        path: '/dashboard/meta/table/',
+      },
+    ],
+  },
+  {
+    name: 'menu.transfer',
+    path: '/dashboard/transfer/',
+    icon: 'el-icon-connection',
+    children: [
+      {
+        name: 'menu.transferSchemaList',
+        path: '/dashboard/transfer/schema/',
+      },
+    ],
+  },
+]
+
+const defaultMenu = ref('')
 
 onMounted(() => {
   const currentPath = router.currentRoute.path
 
-  const menuOpt = _(menuIncludes)
-    .flatMap((prefixes, menu) => _.map(prefixes, (prefix) => [prefix, menu]))
-    .filter((t) => _.startsWith(currentPath, t[0]))
-    .map(1)
+  const menuOpt = _(menuItems)
+    .flatMap((item) => _.map(item.children, 'path'))
+    .filter((path) => _.startsWith(currentPath, path))
     .first()
 
   defaultMenu.value = _.defaultTo(menuOpt, currentPath)
@@ -36,22 +63,17 @@ onMounted(() => {
       :unique-opened="true"
       :router="true"
     >
-      <el-submenu index="/dashboard/meta/">
+      <el-submenu v-for="submenu in menuItems" :key="submenu.name" :index="submenu.path">
         <template slot="title">
-          <i class="el-icon-receiving menu-icon"></i>
-          {{ t('menu.metadata') }}
+          <i :class="`${submenu.icon} menu-icon`"></i>
+          {{ t(submenu.name) }}
         </template>
-        <el-menu-item index="/dashboard/meta/table/list">
-          {{ t('menu.metadataTableList') }}
-        </el-menu-item>
-      </el-submenu>
-      <el-submenu index="/dashboard/transfer/">
-        <template slot="title">
-          <i class="el-icon-connection menu-icon"></i>
-          {{ t('menu.transfer') }}
-        </template>
-        <el-menu-item index="/dashboard/transfer/schema/list">
-          {{ t('menu.transferSchemaList') }}
+        <el-menu-item
+          v-for="menuItem in submenu.children"
+          :key="menuItem.name"
+          :index="menuItem.path"
+        >
+          {{ t(menuItem.name) }}
         </el-menu-item>
       </el-submenu>
     </el-menu>
