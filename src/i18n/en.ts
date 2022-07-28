@@ -14,6 +14,8 @@ export default {
     metadataTableList: 'Tables',
     transfer: 'ETL',
     transferSchemaList: 'Extracts',
+    dataQuality: 'Data Quality',
+    dataQualityBusinessOnline: 'Business Online',
   },
   metadata: {
     tableList: {

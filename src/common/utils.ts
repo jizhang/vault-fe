@@ -9,6 +9,7 @@ function getVm() {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const useCookie = () => (getVm() as any).$cookie
 export const useRouter = (): VueRouter => getVm().$router
+export const useH = () => getVm().$createElement
 
 export function formatBytes(bytes: number) {
   const negative = bytes < 0

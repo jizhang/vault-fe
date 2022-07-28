@@ -14,6 +14,8 @@ export default {
     metadataTableList: '表数据管理',
     transfer: '数据抽取',
     transferSchemaList: '抽取配置',
+    dataQuality: '数据质量',
+    dataQualityBusinessOnline: '新业务上线',
   },
   metadata: {
     tableList: {

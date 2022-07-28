@@ -37,6 +37,17 @@ const menuItems: MenuItem[] = [
       },
     ],
   },
+  {
+    name: 'menu.dataQuality',
+    path: '/dashboard/data-quality/',
+    icon: 'el-icon-folder-checked',
+    children: [
+      {
+        name: 'menu.dataQualityBusinessOnline',
+        path: '/dashboard/data-quality/business-online',
+      },
+    ],
+  },
 ]
 
 const defaultMenu = ref('')

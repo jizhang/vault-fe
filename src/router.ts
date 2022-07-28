@@ -6,6 +6,8 @@ import Login from './views/Login.vue'
 import MetaTableList from './views/meta/TableList.vue'
 import MetaDbList from './views/meta/DbList.vue'
 import TransferSchemaList from './views/transfer/SchemaList.vue'
+import BusinessOnline from './views/data-quality/BusinessOnline.vue'
+import BusinessOnlineEdit from './views/data-quality/BusinessOnlineEdit.vue'
 
 Vue.use(VueRouter)
 
@@ -24,6 +26,9 @@ const routes = [
 
       { path: 'transfer/schema/list', component: TransferSchemaList },
       { path: 'transfer/schema/', redirect: 'transfer/schema/list' },
+
+      { path: 'data-quality/business-online/', component: BusinessOnline },
+      { path: 'data-quality/business-online/edit', component: BusinessOnlineEdit },
 
       { path: '/*', redirect: 'meta/table' },
     ],
