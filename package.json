@@ -8,13 +8,11 @@
     "build": "webpack --mode=production --progress",
     "build:ci": "webpack --mode=production",
     "analyze": "webpack --mode=production --progress --env analyze",
-    "lint": "eslint --ext .vue,.ts,.js --fix . && prettier --write . && npm run checktype",
-    "lint:ci": "eslint --ext .vue,.ts,.js . && prettier --check . && npm run checktype",
-    "checktype": "vue-tsc --noEmit",
+    "lint": "eslint --ext .vue,.ts,.js --fix . && vue-tsc --noEmit",
+    "lint:ci": "eslint --ext .vue,.ts,.js . && vue-tsc --noEmit",
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*": "prettier --write --ignore-unknown",
     "*.{vue,ts,js}": "eslint --fix"
   },
   "dependencies": {
@@ -45,7 +43,6 @@
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.1",
     "eslint": "^8.16.0",
-    "eslint-config-prettier": "^8.5.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-n": "^15.2.0",
@@ -60,7 +57,6 @@
     "lint-staged": "^12.4.2",
     "mini-css-extract-plugin": "^2.6.0",
     "mocker-api": "^2.9.5",
-    "prettier": "^2.7.1",
     "ts-loader": "^9.3.1",
     "typescript": "^4.7.4",
     "vue-loader": "^15.10.0",

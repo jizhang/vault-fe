@@ -1,27 +1,26 @@
 module.exports = {
   env: {
     browser: true,
-    node: true,
+    node: true
   },
   extends: [
     'standard',
     'plugin:vue/essential',
-    'plugin:@typescript-eslint/recommended',
-    'prettier',
+    'plugin:@typescript-eslint/recommended'
   ],
   overrides: [
     {
       files: '*.js',
       rules: {
-        '@typescript-eslint/no-var-requires': 'off',
-      },
-    },
+        '@typescript-eslint/no-var-requires': 'off'
+      }
+    }
   ],
   parser: 'vue-eslint-parser',
   parserOptions: {
-    parser: '@typescript-eslint/parser',
+    parser: '@typescript-eslint/parser'
   },
   rules: {
-    'vue/multi-word-component-names': 'off',
-  },
+    'vue/multi-word-component-names': 'off'
+  }
 }
