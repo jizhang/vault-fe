@@ -13,6 +13,9 @@ module.exports = {
     'no-undef': 'off',
     'quotes': ['error', 'single'],
     'semi': ['error', 'never'],
+    // TypeScript
+    '@typescript-eslint/no-explicit-any': 'off',
+    // Vue
     'vue/multi-word-component-names': 'off',
   }
 }

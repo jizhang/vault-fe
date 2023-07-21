@@ -1,12 +1,12 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 import { defineStore } from 'pinia'
 import * as service from '@/services/metaTable'
 import * as userService from '@/services/user'
 
 export default defineStore('metaTable', {
   state: () => ({
-    userOptions: [],
-    dbOptions: [],
+    userOptions: [] as any[],
+    dbOptions: [] as any[],
   }),
 
   actions: {

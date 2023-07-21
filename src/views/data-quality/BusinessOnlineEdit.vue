@@ -1,5 +1,4 @@
-<script setup>
-import _ from 'lodash'
+<script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { storeToRefs } from 'pinia'
 import { MessageBox } from 'element-ui'
@@ -29,7 +28,7 @@ const defaultForm = {
 const form = ref({
   ...defaultForm,
 })
-const formRef = ref(null)
+const formRef = ref<any>(null)
 
 const rules = {
   title: [{ required: true, message: '请输入业务名称' }],
@@ -39,7 +38,7 @@ const rules = {
 }
 
 const editorRef = ref(null)
-let editor = null
+let editor: any = null
 
 onMounted(() => {
   editor = ace.edit(editorRef.value, {
@@ -50,8 +49,8 @@ onMounted(() => {
   tableStore.getUserOptions()
   tableStore.getDbOptions()
 
-  const id = _.get(router.currentRoute, ['query', 'id'])
-  if (id > 0) {
+  const id = router.currentRoute.query.id
+  if (id) {
     store.editItem({ id }).then((data) => {
       updateForm(data)
     })
@@ -62,7 +61,7 @@ onBeforeUnmount(() => {
   editor.destroy()
 })
 
-function updateForm(data) {
+function updateForm(data: any) {
   form.value = {
     ...defaultForm,
     ...data,
@@ -97,7 +96,7 @@ function checkQuery() {
 
 function submit() {
   form.value.query = editor.session.getValue()
-  formRef.value.validate((isValid) => {
+  formRef.value.validate((isValid: boolean) => {
     if (!isValid) {
       return
     }

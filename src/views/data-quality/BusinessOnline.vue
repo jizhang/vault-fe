@@ -1,5 +1,5 @@
-<script setup>
-import _ from 'lodash'
+<script setup lang="ts">
+import * as _ from 'lodash'
 import { onMounted } from 'vue'
 import { MessageBox } from 'element-ui'
 import useStore from '@/stores/businessOnline'
@@ -10,10 +10,10 @@ const store = useStore()
 const h = useH()
 
 onMounted(() => {
-  store.fetchData()
+  store.fetchData({})
 })
 
-function showQuery(itemId) {
+function showQuery(itemId: number) {
   const item = _.find(store.data, ['id', itemId])
   MessageBox({
     title: item.title,
@@ -33,17 +33,17 @@ function createItem() {
   })
 }
 
-function editItem(itemId) {
+function editItem(itemId: number) {
   router.push({
     path: '/dashboard/data-quality/business-online/edit',
-    query: { id: itemId },
+    query: { id: String(itemId) },
   })
 }
 
-function deleteItem(itemId) {
+function deleteItem(itemId: number) {
   const data = { id: itemId }
   store.deleteItem(data).then(() => {
-    store.fetchData()
+    store.fetchData({})
   })
 }
 </script>
@@ -76,7 +76,7 @@ function deleteItem(itemId) {
           label="业务名称"
           min-width="200"
         >
-          <template slot-scope="scope">
+          <template #default="scope">
             <el-tooltip
               content="查看 SQL"
               placement="right"
@@ -95,7 +95,7 @@ function deleteItem(itemId) {
           label="状态"
           min-width="80"
         >
-          <template slot-scope="scope">
+          <template #default="scope">
             <el-tag
               v-if="scope.row.status === 1"
               type="success"
@@ -126,7 +126,7 @@ function deleteItem(itemId) {
           label="操作"
           min-width="160"
         >
-          <template slot-scope="scope">
+          <template #default="scope">
             <el-button
               type="text"
               size="mini"
