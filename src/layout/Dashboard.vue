@@ -48,17 +48,23 @@ function userActionSelect(key: string) {
           </div>
 
           <div class="user-actions">
-            <el-menu mode="horizontal" @select="userActionSelect">
+            <el-menu
+              mode="horizontal"
+              @select="userActionSelect"
+            >
               <el-submenu index="2">
                 <template slot="title">
-                  <span class="username" v-text="username"></span>
+                  <span
+                    class="username"
+                    v-text="username"
+                  />
                 </template>
                 <el-menu-item index="2-2">
-                  <i class="el-icon-collection user-actions-icon"></i>
+                  <i class="el-icon-collection user-actions-icon" />
                   {{ t('userActions.changeLocale') }}
                 </el-menu-item>
                 <el-menu-item index="2-1">
-                  <i class="el-icon-user user-actions-icon"></i>
+                  <i class="el-icon-user user-actions-icon" />
                   {{ t('userActions.logout') }}
                 </el-menu-item>
               </el-submenu>
@@ -69,9 +75,9 @@ function userActionSelect(key: string) {
     </Navbar>
 
     <div class="dashboard">
-      <Sidebar></Sidebar>
+      <Sidebar />
       <div class="page-container">
-        <router-view></router-view>
+        <router-view />
       </div>
     </div>
   </div>

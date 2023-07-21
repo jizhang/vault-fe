@@ -4,3 +4,4 @@ declare module '*.vue' {
 }
 
 declare module 'vue-cookie'
+declare module 'ace-builds/src-noconflict/ace'

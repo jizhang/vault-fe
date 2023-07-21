@@ -1,5 +1,5 @@
-<script setup>
-import _ from 'lodash'
+<script setup lang="ts">
+import * as _ from 'lodash'
 import { onMounted } from 'vue'
 import { MessageBox } from 'element-ui'
 import useStore from '@/stores/businessOnline'
@@ -10,10 +10,10 @@ const store = useStore()
 const h = useH()
 
 onMounted(() => {
-  store.fetchData()
+  store.fetchData({})
 })
 
-function showQuery(itemId) {
+function showQuery(itemId: number) {
   const item = _.find(store.data, ['id', itemId])
   MessageBox({
     title: item.title,
@@ -33,17 +33,17 @@ function createItem() {
   })
 }
 
-function editItem(itemId) {
+function editItem(itemId: number) {
   router.push({
     path: '/dashboard/data-quality/business-online/edit',
-    query: { id: itemId },
+    query: { id: String(itemId) },
   })
 }
 
-function deleteItem(itemId) {
+function deleteItem(itemId: number) {
   const data = { id: itemId }
   store.deleteItem(data).then(() => {
-    store.fetchData()
+    store.fetchData({})
   })
 }
 </script>
@@ -52,38 +52,99 @@ function deleteItem(itemId) {
   <transition name="fade">
     <div class="page-business-online">
       <div style="float: right">
-        <el-button type="success" size="small" icon="el-icon-plus" @click="createItem">
+        <el-button
+          type="success"
+          size="small"
+          icon="el-icon-plus"
+          @click="createItem"
+        >
           新建
         </el-button>
       </div>
-      <div class="page-title">新上线业务监控</div>
+      <div class="page-title">
+        新上线业务监控
+      </div>
 
       <el-table :data="store.data">
-        <el-table-column prop="id" label="#" min-width="50"></el-table-column>
-        <el-table-column prop="title" label="业务名称" min-width="200">
-          <template slot-scope="scope">
-            <el-tooltip content="查看 SQL" placement="right">
-              <el-button type="text" @click="showQuery(scope.row.id)">
+        <el-table-column
+          prop="id"
+          label="#"
+          min-width="50"
+        />
+        <el-table-column
+          prop="title"
+          label="业务名称"
+          min-width="200"
+        >
+          <template #default="scope">
+            <el-tooltip
+              content="查看 SQL"
+              placement="right"
+            >
+              <el-button
+                type="text"
+                @click="showQuery(scope.row.id)"
+              >
                 {{ scope.row.title }}
               </el-button>
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="状态" min-width="80">
-          <template slot-scope="scope">
-            <el-tag v-if="scope.row.status === 1" type="success" close-transition>有效</el-tag>
-            <el-tag v-if="scope.row.status === 2" type="gray" close-transition>暂停</el-tag>
+        <el-table-column
+          prop="status"
+          label="状态"
+          min-width="80"
+        >
+          <template #default="scope">
+            <el-tag
+              v-if="scope.row.status === 1"
+              type="success"
+              close-transition
+            >
+              有效
+            </el-tag>
+            <el-tag
+              v-if="scope.row.status === 2"
+              type="gray"
+              close-transition
+            >
+              暂停
+            </el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="username" label="负责人" min-width="80"></el-table-column>
-        <el-table-column prop="created_at" label="创建时间" min-width="180"></el-table-column>
-        <el-table-column label="操作" min-width="160">
-          <template slot-scope="scope">
-            <el-button type="text" size="mini" icon="el-icon-edit" @click="editItem(scope.row.id)">
+        <el-table-column
+          prop="username"
+          label="负责人"
+          min-width="80"
+        />
+        <el-table-column
+          prop="created_at"
+          label="创建时间"
+          min-width="180"
+        />
+        <el-table-column
+          label="操作"
+          min-width="160"
+        >
+          <template #default="scope">
+            <el-button
+              type="text"
+              size="mini"
+              icon="el-icon-edit"
+              @click="editItem(scope.row.id)"
+            >
               编辑
             </el-button>
-            <el-popconfirm title="确定要删除吗？" @confirm="deleteItem(scope.row.id)">
-              <el-button type="text" size="mini" icon="el-icon-delete" slot="reference">
+            <el-popconfirm
+              title="确定要删除吗？"
+              @confirm="deleteItem(scope.row.id)"
+            >
+              <el-button
+                slot="reference"
+                type="text"
+                size="mini"
+                icon="el-icon-delete"
+              >
                 删除
               </el-button>
             </el-popconfirm>

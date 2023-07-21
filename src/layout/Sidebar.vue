@@ -74,9 +74,13 @@ onMounted(() => {
       :unique-opened="true"
       :router="true"
     >
-      <el-submenu v-for="submenu in menuItems" :key="submenu.name" :index="submenu.path">
+      <el-submenu
+        v-for="submenu in menuItems"
+        :key="submenu.name"
+        :index="submenu.path"
+      >
         <template slot="title">
-          <i :class="`${submenu.icon} menu-icon`"></i>
+          <i :class="`${submenu.icon} menu-icon`" />
           {{ t(submenu.name) }}
         </template>
         <el-menu-item

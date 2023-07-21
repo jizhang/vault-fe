@@ -1,7 +1,9 @@
 <template>
   <transition name="fade">
     <div class="page-transfer-schema-list">
-      <div class="page-title">抽取配置</div>
+      <div class="page-title">
+        抽取配置
+      </div>
     </div>
   </transition>
 </template>

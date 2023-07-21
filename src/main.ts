@@ -1,4 +1,3 @@
-/* eslint-disable import/first */
 import Vue from 'vue'
 import VueCookie from 'vue-cookie'
 import ElementUI from 'element-ui'

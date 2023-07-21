@@ -1,5 +1,4 @@
-<script setup>
-import _ from 'lodash'
+<script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { storeToRefs } from 'pinia'
 import { MessageBox } from 'element-ui'
@@ -29,7 +28,7 @@ const defaultForm = {
 const form = ref({
   ...defaultForm,
 })
-const formRef = ref(null)
+const formRef = ref<any>(null)
 
 const rules = {
   title: [{ required: true, message: '请输入业务名称' }],
@@ -39,7 +38,7 @@ const rules = {
 }
 
 const editorRef = ref(null)
-let editor = null
+let editor: any = null
 
 onMounted(() => {
   editor = ace.edit(editorRef.value, {
@@ -50,8 +49,8 @@ onMounted(() => {
   tableStore.getUserOptions()
   tableStore.getDbOptions()
 
-  const id = _.get(router.currentRoute, ['query', 'id'])
-  if (id > 0) {
+  const id = router.currentRoute.query.id
+  if (id) {
     store.editItem({ id }).then((data) => {
       updateForm(data)
     })
@@ -62,7 +61,7 @@ onBeforeUnmount(() => {
   editor.destroy()
 })
 
-function updateForm(data) {
+function updateForm(data: any) {
   form.value = {
     ...defaultForm,
     ...data,
@@ -84,7 +83,7 @@ function checkQuery() {
           {
             style: 'white-space: pre',
           },
-          result.message
+          result.message,
         ),
       })
     } else {
@@ -97,7 +96,7 @@ function checkQuery() {
 
 function submit() {
   form.value.query = editor.session.getValue()
-  formRef.value.validate((isValid) => {
+  formRef.value.validate((isValid: boolean) => {
     if (!isValid) {
       return
     }
@@ -124,44 +123,94 @@ function cancel() {
         <span v-else>新建监控</span>
       </div>
 
-      <el-form :model="form" :rules="rules" ref="formRef" label-width="120px" class="edit-form">
-        <el-input type="hidden" v-model="form.id"></el-input>
-        <el-form-item label="业务名称" prop="title">
-          <el-input v-model="form.title"></el-input>
+      <el-form
+        ref="formRef"
+        :model="form"
+        :rules="rules"
+        label-width="120px"
+        class="edit-form"
+      >
+        <el-input
+          v-model="form.id"
+          type="hidden"
+        />
+        <el-form-item
+          label="业务名称"
+          prop="title"
+        >
+          <el-input v-model="form.title" />
         </el-form-item>
-        <el-form-item label="负责人" prop="user_id">
-          <el-select v-model="form.user_id" placeholder="请选择">
+        <el-form-item
+          label="负责人"
+          prop="user_id"
+        >
+          <el-select
+            v-model="form.user_id"
+            placeholder="请选择"
+          >
             <el-option
               v-for="item in userOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            ></el-option>
+            />
           </el-select>
         </el-form-item>
-        <el-form-item label="状态" prop="status">
+        <el-form-item
+          label="状态"
+          prop="status"
+        >
           <el-radio-group v-model="form.status">
-            <el-radio :label="1">有效</el-radio>
-            <el-radio :label="2">暂停</el-radio>
+            <el-radio :label="1">
+              有效
+            </el-radio>
+            <el-radio :label="2">
+              暂停
+            </el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="数据库" prop="db_id">
-          <el-select v-model="form.db_id" placeholder="请选择">
+        <el-form-item
+          label="数据库"
+          prop="db_id"
+        >
+          <el-select
+            v-model="form.db_id"
+            placeholder="请选择"
+          >
             <el-option
               v-for="item in dbOptions"
               :key="item.value"
               :label="item.label"
               :value="item.value"
-            ></el-option>
+            />
           </el-select>
         </el-form-item>
-        <el-form-item label="查询语句" prop="query">
-          <div ref="editorRef" class="editor"></div>
+        <el-form-item
+          label="查询语句"
+          prop="query"
+        >
+          <div
+            ref="editorRef"
+            class="editor"
+          />
         </el-form-item>
         <el-form-item>
-          <el-button type="success" icon="el-icon-caret-right" @click="checkQuery">测试</el-button>
-          <el-button type="primary" @click="submit">提交</el-button>
-          <el-button @click="cancel">取消</el-button>
+          <el-button
+            type="success"
+            icon="el-icon-caret-right"
+            @click="checkQuery"
+          >
+            测试
+          </el-button>
+          <el-button
+            type="primary"
+            @click="submit"
+          >
+            提交
+          </el-button>
+          <el-button @click="cancel">
+            取消
+          </el-button>
         </el-form-item>
       </el-form>
     </div>
