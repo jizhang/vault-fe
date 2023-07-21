@@ -1,12 +1,12 @@
 <template>
   <div class="navbar">
     <div class="site-logo">
-      <i class="el-icon-eleme"></i>
+      <i class="el-icon-eleme" />
       <span class="site-name">Morph</span>
     </div>
 
     <!-- navbar content -->
-    <slot name="content"></slot>
+    <slot name="content" />
   </div>
 </template>
 

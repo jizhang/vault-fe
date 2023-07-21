@@ -8,12 +8,12 @@
     "build": "webpack --mode=production --progress",
     "build:ci": "webpack --mode=production",
     "analyze": "webpack --mode=production --progress --env analyze",
-    "lint": "eslint --ext .vue,.ts,.js --fix . && vue-tsc --noEmit",
-    "lint:ci": "eslint --ext .vue,.ts,.js . && vue-tsc --noEmit",
+    "lint": "eslint --ext .vue,.ts --fix . && vue-tsc --noEmit",
+    "lint:ci": "eslint --ext .vue,.ts . && vue-tsc --noEmit",
     "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{vue,ts,js}": "eslint --fix"
+    "*.{vue,ts}": "eslint --fix"
   },
   "dependencies": {
     "ace-builds": "^1.4.14",
@@ -37,17 +37,13 @@
     "@babel/plugin-transform-runtime": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
     "@types/lodash": "^4.14.182",
-    "@typescript-eslint/eslint-plugin": "^5.30.4",
-    "@typescript-eslint/parser": "^5.30.4",
+    "@typescript-eslint/eslint-plugin": "^5.60.0",
+    "@typescript-eslint/parser": "^5.60.0",
     "babel-loader": "^8.2.4",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.1",
-    "eslint": "^8.16.0",
-    "eslint-config-standard": "^17.0.0",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-n": "^15.2.0",
-    "eslint-plugin-promise": "^6.0.0",
-    "eslint-plugin-vue": "^8.7.1",
+    "eslint": "^8.44.0",
+    "eslint-plugin-vue": "^9.15.0",
     "fork-ts-checker-webpack-plugin": "^7.2.13",
     "glob": "^7.0.0",
     "html-webpack-plugin": "^5.5.0",

@@ -11,7 +11,12 @@ function createDb() {
     <div class="page-metadata-db-list">
       <div style="float: right">
         <el-button-group>
-          <el-button type="success" size="small" icon="el-icon-plus" @click="createDb">
+          <el-button
+            type="success"
+            size="small"
+            icon="el-icon-plus"
+            @click="createDb"
+          >
             新建数据库
           </el-button>
           <el-button
@@ -24,7 +29,9 @@ function createDb() {
           </el-button>
         </el-button-group>
       </div>
-      <div class="page-title">管理数据库</div>
+      <div class="page-title">
+        管理数据库
+      </div>
     </div>
   </transition>
 </template>

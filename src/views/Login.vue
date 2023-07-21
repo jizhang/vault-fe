@@ -37,19 +37,26 @@ function signIn() {
 
 <template>
   <div style="width: 500px; margin: 100px auto auto auto; padding-right: 120px">
-    <el-form :model="loginForm" label-width="120px">
+    <el-form
+      :model="loginForm"
+      label-width="120px"
+    >
       <el-form-item :label="t('userActions.username')">
-        <el-input v-model="loginForm.username"></el-input>
+        <el-input v-model="loginForm.username" />
       </el-form-item>
       <el-form-item :label="t('userActions.password')">
         <el-input
-          type="password"
           v-model="loginForm.password"
+          type="password"
           @keyup.enter.native="signIn"
-        ></el-input>
+        />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="signIn" :loading="loading">
+        <el-button
+          type="primary"
+          :loading="loading"
+          @click="signIn"
+        >
           {{ t('userActions.login') }}
         </el-button>
       </el-form-item>

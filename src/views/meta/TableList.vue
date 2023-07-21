@@ -22,7 +22,12 @@ function createTable() {
     <div class="page-metadata-table-list">
       <div style="float: right">
         <el-button-group>
-          <el-button type="success" size="small" icon="el-icon-plus" @click="createTable">
+          <el-button
+            type="success"
+            size="small"
+            icon="el-icon-plus"
+            @click="createTable"
+          >
             {{ t('metadata.tableList.newTable') }}
           </el-button>
           <el-button
@@ -35,13 +40,18 @@ function createTable() {
           </el-button>
         </el-button-group>
       </div>
-      <div class="page-title">{{ t('metadata.tableList.title') }}</div>
+      <div class="page-title">
+        {{ t('metadata.tableList.title') }}
+      </div>
       <el-table :data="tableList">
-        <el-table-column prop="id" label="ID"></el-table-column>
+        <el-table-column
+          prop="id"
+          label="ID"
+        />
         <el-table-column
           prop="db_alias"
           :label="t('metadata.tableList.columns.database')"
-        ></el-table-column>
+        />
       </el-table>
     </div>
   </transition>
