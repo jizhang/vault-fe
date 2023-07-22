@@ -2,7 +2,7 @@
   <div class="navbar">
     <div class="site-logo">
       <i class="el-icon-eleme" />
-      <span class="site-name">Morph</span>
+      <span class="site-name">Vault</span>
     </div>
 
     <!-- navbar content -->
