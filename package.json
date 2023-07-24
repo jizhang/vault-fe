@@ -5,7 +5,7 @@
   "scripts": {
     "start": "vite",
     "start:proxy": "cross-env MOCK=none vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "lint": "eslint --ext .vue,.ts --fix . && vue-tsc --noEmit",
     "lint:ci": "eslint --ext .vue,.ts . && vue-tsc --noEmit",
     "prepare": "husky install"
