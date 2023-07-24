@@ -1,22 +1,24 @@
-function getBiz(req, res) {
-  res.json({
+import { MockMethod } from 'vite-plugin-mock'
+
+function getBiz() {
+  return {
     payload: [
       [1, '任务'],
       [2, '广告主'],
     ],
-  })
+  }
 }
 
-function getDbList(req, res) {
-  res.json({
+function getDbList() {
+  return {
     payload: [
       { id: 1, db_alias: 'dw_stage' },
       { id: 2, db_alias: 'zhuanqian' },
     ],
-  })
+  }
 }
 
-function getTableList(req, res) {
+function getTableList() {
   const data = [
     {
       id: 1,
@@ -37,16 +39,25 @@ function getTableList(req, res) {
     },
   ]
 
-  res.json({
+  return {
     payload: {
       data,
       total: data.length,
     },
-  })
+  }
 }
 
-module.exports = {
-  'GET /api/meta/table/biz': getBiz,
-  'GET /api/meta/table/list': getTableList,
-  'GET /api/meta/db/list': getDbList,
-}
+export default [
+  {
+    url: '/api/meta/table/biz',
+    response: getBiz,
+  },
+  {
+    url: '/api/meta/table/list',
+    response: getTableList,
+  },
+  {
+    url: '/api/meta/db/list',
+    response: getDbList,
+  },
+] as MockMethod[]
