@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import * as _ from 'lodash'
+import _ from 'lodash'
 import { onMounted } from 'vue'
 import { MessageBox } from 'element-ui'
 import useStore from '@/stores/businessOnline'

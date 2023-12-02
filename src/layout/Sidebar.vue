@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import * as _ from 'lodash'
+import _ from 'lodash'
 import { onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n-composable'
 import { useRouter } from '@/common/utils'

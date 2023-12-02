@@ -1,4 +1,4 @@
-import * as _ from 'lodash'
+import _ from 'lodash'
 import { defineStore } from 'pinia'
 import * as service from '@/services/metaTable'
 import * as userService from '@/services/user'
